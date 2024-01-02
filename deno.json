@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "lib": [],
+      "strict": true
+    },
+    "tasks": {
+      "run": "deno run -A --unstable --watch server.ts",
+      "test": "deno run -A --unstable --watch test.ts",
+      "cache": "deno cache --reload --unstable --lock-write ./lib/deps.ts"
+    }
+  }
