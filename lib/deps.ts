@@ -18,7 +18,7 @@ export { CSG as THREE_CSG } from "https://esm.sh/three-csg-ts@3.1.13";
 
 // Local repo
 export * from "../../Blm/mod.ts";
-export * from "../../Uts/mod.ts";
+export * from "../../Uts/modBrowser.ts";
 
 // Github repo
 // export * from "../../Blm/mod.ts";

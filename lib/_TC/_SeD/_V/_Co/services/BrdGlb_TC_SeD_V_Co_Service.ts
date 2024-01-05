@@ -1,12 +1,4 @@
-/*! ---------------------------------------------------------------------------
- * @copyright Breda Sistemi industriali S.p.A., 2023 - http://bredasys.com
- * All rights reserved
- * @licence You cannot host, display, distribute or share this Work in any
- * form, both physical and digital. You cannot use this Work in any commercial
- * or non-commercial product, website or project. You cannot sell this Work
- * and you cannot mint an NFTs out of it.
- * ----------------------------------------------------------------------------
- */
+
 
 /** ---------------------------------------------------------------------------
  * @module [Brd/3Dv]
@@ -14,6 +6,7 @@
  * @version 0.1 DLV 20230626
  * @version 0.2 APG 20230720
  * @version 0.3 APG 20231113 - Refactoring semplificazione e pulizia
+ * @version 0.4 APG 20240102 Spostato nel modulo BrdGlb
  * ----------------------------------------------------------------------------
  */
 
@@ -50,7 +43,7 @@ const MODULE_NAME = "BrdGlb_TC_SeD_V_CoatService";
 export class BrdGlb_TC_SeD_V_Co_Service {
 
 
-    
+
     private _logger: Uts.BrdUts_Logger;
 
     constructor(alogger: Uts.BrdUts_Logger) {
@@ -74,12 +67,8 @@ export class BrdGlb_TC_SeD_V_Co_Service {
 
         const sections = this.#buildSections(adoor);
         for (const section of sections) {
-
-            for (let i = 0; i < section.ext.length; i++) {
-                r.push(section.ext[i]);
-                r.push(section.int[i]);
-            }
-
+            r.push(section.ext);
+            r.push(section.int);
         }
 
         // const gasketsBuilder = new Brd3Dv_SeDGasketsBuilder(this.logger);
@@ -113,10 +102,10 @@ export class BrdGlb_TC_SeD_V_Co_Service {
                 const panelMeshes = foamedPanelBuilder.build(section);
                 r.push(panelMeshes)
             }
-            else{
-                Uts.BrdUts.Assert( 
+            else {
+                Uts.BrdUts.Assert(
                     false,
-                    `${MODULE_NAME}:${this.#buildSections.name}: `+
+                    `${MODULE_NAME}:${this.#buildSections.name}: ` +
                     `Le sezioni della famiglia ${section.family} non sono ancora implementate.`
                 )
             }
@@ -127,3 +116,14 @@ export class BrdGlb_TC_SeD_V_Co_Service {
 
 
 }
+
+
+/*! ---------------------------------------------------------------------------
+ * @copyright Breda Sistemi industriali S.p.A., 2023 - http://bredasys.com
+ * All rights reserved
+ * @licence You cannot host, display, distribute or share this Work in any
+ * form, both physical and digital. You cannot use this Work in any commercial
+ * or non-commercial product, website or project. You cannot sell this Work
+ * and you cannot mint an NFTs out of it.
+ * ----------------------------------------------------------------------------
+ */

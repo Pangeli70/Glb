@@ -15,6 +15,9 @@
 
 
 import {
+    BrdGlb_AssetsServer
+} from "../../../../consts/BrdGlb_AssetsServer.ts";
+import {
     Blm,
     THREE,
     Uts
@@ -28,6 +31,9 @@ import {
 import {
     BrdGlb_IMaterialDef
 } from "../../../../interfaces/BrdGlb_IMaterialDef.ts";
+import {
+    BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset
+} from "../../recordsets/BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset.ts";
 import {
     BrdGlb_TC_SeD_SectionMaterials_Recordset
 } from "../../recordsets/BrdGlb_TC_SeD_SectionMaterials_Recordset.ts";
@@ -193,7 +199,6 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
                 yDisplacement,
                 topCut,
                 bottomCut: 0,
-                materials
             }
             r.push(sectionParams);
 
@@ -407,7 +412,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
         acolor?: string
     ) {
 
-        const urlRoot = Brd3Dv_AssetsServer + "/assets/img/jpg/textures/sections/";
+        const urlRoot = BrdGlb_AssetsServer + "/assets/img/jpg/textures/sections/";
 
         const material = new THREE.MeshStandardMaterial({
             wireframe: false,
@@ -464,10 +469,10 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             material.map.repeat.setY(sectionMaterial.texture.vScale || 1);
         }
 
-        let finishVariant = Blm.TC.SeD.BrdBlm_TC_SeD_FoamedPanelFinishVariant_Recordset[afinishVariant];
+        let finishVariant = BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset[afinishVariant];
 
         if (adesign == Blm.TC.SeD.BrdBlm_TC_SeD_eDesign.MULTIRIB) {
-            finishVariant = Blm.TC.SeD.BrdBlm_TC_SeD_FoamedPanelFinishVariant_Recordset[Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.MULTIRIB];
+            finishVariant = BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset[Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.MULTIRIB];
         }
 
         if (finishVariant && finishVariant.bumpMap) {

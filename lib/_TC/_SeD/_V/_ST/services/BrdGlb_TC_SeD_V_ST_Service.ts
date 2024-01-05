@@ -8,9 +8,6 @@
  */
 
 import {
-    BrdBlm_TC_SeD_SlidingTracksOutlines_Service
-} from "../../../../../../../Blm/lib/_TC/_SeD/services/BrdBlm_TC_SeD_SlidingTracksOutlines_Service.ts";
-import {
     Blm,
     THREE,
 } from "../../../../../deps.ts";
@@ -103,7 +100,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         atype: Blm.TC.SeD.BrdBlm_TC_SeD_eSlidingTracksOutlineType
     ) {
 
-        const points = BrdBlm_TC_SeD_SlidingTracksOutlines_Service.Get(atype);
+        const points = Blm.TC.SeD.BrdBlm_TC_SeD_SlidingTracksOutlines_Service.Get(atype);
         const r = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(points);
 
         return r;
@@ -114,7 +111,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         atype: Blm.TC.SeD.BrdBlm_TC_SeD_eSlidingTracksOutlineType
     ) {
 
-        const points = BrdBlm_TC_SeD_SlidingTracksOutlines_Service.Get(atype);
+        const points = Blm.TC.SeD.BrdBlm_TC_SeD_SlidingTracksOutlines_Service.Get(atype);
         const mirroredPoints = this.mirrorPointsAgainstYAxis(points);
         const r = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(mirroredPoints);
 
@@ -500,6 +497,15 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         r.add(helpers);
 
         return r;
+    }
+
+
+    
+    static async Export(
+        ascene: THREE.Scene,
+        adoBinary = true
+    ) { 
+        return await super.export(ascene, adoBinary);
     }
 
     // #endregion

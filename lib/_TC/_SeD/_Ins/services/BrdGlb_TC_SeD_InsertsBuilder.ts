@@ -19,7 +19,7 @@ import {
     THREE,
     GLTFLoader,
     STLLoader
-} from "../../../../../../V3d/srv/assets/ts/Brd3Dv_Deps.ts";
+} from "../../../../../../V3d/lib/Brd3Dv_Deps.ts";
 import {
     BrdGlb_eLayers
 } from "../../../../enums/BrdGlb_eLayers.ts";

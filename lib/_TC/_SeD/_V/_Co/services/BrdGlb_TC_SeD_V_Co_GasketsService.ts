@@ -1,22 +1,16 @@
-
-
 /** ---------------------------------------------------------------------------
- * @module [Brd/3Dv]
+ * @module [BrdGlb_TC_SeD_V_Co]
  * @author [APG] Angeli Paolo Giusto 
  * @version 0.1 APG 20230707
  * @version 0.2 APG 20231109 Ridenominazione, Pulizia e refactoring
+ * @version 0.3 APG 20240102 Spostato nel modulo BrdGlb
  * ----------------------------------------------------------------------------
  */
 
 import {
-    BrdBlm_IPoint2D
-} from "../../../../../../../Blm/lib/interfaces/BrdBlm_IPoint2D.ts";
-
-import {
-    Brd3Dv_eParts
-} from "../../../../../../../V3d/srv/assets/ts_old/__/__Brd3Dv_Enums.ts";
-import {
-    THREE, Blm, Uts
+    Blm,
+    THREE,
+    Uts
 } from "../../../../../deps.ts";
 import {
     BrdGlb_eLayers
@@ -48,7 +42,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
 
     #makeGasketsShapes() {
 
-        const aluGasketProfile: BrdBlm_IPoint2D[] = [
+        const aluGasketProfile: Blm.BrdBlm_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: 42, y: 0 },
             { x: 42, y: 40 },
@@ -61,7 +55,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const topBottomAluProfile = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(aluGasketProfile);
 
 
-        const bottomGasketProfile: BrdBlm_IPoint2D[] = [
+        const bottomGasketProfile: Blm.BrdBlm_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: 42, y: 0 },
             { x: 32, y: -20 },
@@ -78,7 +72,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const bottomGasket = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(bottomGasketProfile);
 
 
-        const topGasketProfile: BrdBlm_IPoint2D[] = [
+        const topGasketProfile: Blm.BrdBlm_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: 3, y: 3 },
             { x: -20, y: 23 },
@@ -88,7 +82,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const topGasket = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(topGasketProfile);
 
 
-        const lateralGasketProfile: BrdBlm_IPoint2D[] = [
+        const lateralGasketProfile: Blm.BrdBlm_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: -20, y: 0 },
             { x: -20, y: 2 },
@@ -138,7 +132,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         alenght: number,
         ashape: THREE.Shape,
         amaterial: THREE.Material,
-        aname: Brd3Dv_eParts
+        aname: Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames
     ) {
         const extrusionOptions = {
             depth: alenght,
@@ -180,7 +174,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
             horizLenght,
             gasketShapes.topBottomAluProfile,
             gasketsMaterials.scotchBriteBlack,
-            Brd3Dv_eParts.PRODUCT_VSeD_BASE_ALU_PROFILE,
+            Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames.BASE_ALU_PROFILE
         );
         baseAluProfile.position.set(originX, yDisplacement, zDisplacement);
         baseAluProfile.rotation.y = rot90Deg;
@@ -189,7 +183,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
 
 
         const topAluProfile = baseAluProfile.clone(false);
-        topAluProfile.name = Brd3Dv_eParts.PRODUCT_VSeD_TOP_ALU_PROFILE
+        topAluProfile.name = Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames.TOP_ALU_PROFILE
         const topYDisplacement = adoor.height - 10;
         topAluProfile.position.set(-originX, topYDisplacement, zDisplacement);
         topAluProfile.rotation.y = -rot90Deg;
@@ -202,7 +196,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
             horizLenght,
             gasketShapes.bottomGasket,
             gasketsMaterials.rubber,
-            Brd3Dv_eParts.PRODUCT_VSeD_BOTTOM_GASKET,
+            Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames.BOTTOM_GASKET
         );
         bottomGasket.position.set(originX, yDisplacement - 10, zDisplacement);
         bottomGasket.rotation.y = rot90Deg;
@@ -214,7 +208,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
             verticalLenght,
             gasketShapes.lateralGasket,
             gasketsMaterials.rubber,
-            Brd3Dv_eParts.PRODUCT_VSeD_RIGHT_GASKET,
+            Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames.RIGHT_GASKET
         );
         rightGasket.position.set(originX, 0, 0);
         rightGasket.rotation.x = -rot90Deg;
@@ -223,7 +217,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
 
 
         const leftGasket = rightGasket.clone(false);
-        leftGasket.name = Brd3Dv_eParts.PRODUCT_VSeD_LEFT_GASKET
+        leftGasket.name = Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames.LEFT_GASKET
         leftGasket.position.set(originX, 0, 0);
         // NOTE Flip trick using a pivot for rotation -- APG 20230630
         const mirrorPivot = new THREE.Group();
@@ -237,7 +231,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
             horizLenght,
             gasketShapes.topGasket,
             gasketsMaterials.rubber,
-            Brd3Dv_eParts.PRODUCT_VSeD_TOP_GASKET,
+            Blm.TC.SeD.V.BrdBlm_TC_SeD_V_eCoatGasketsPartNames.TOP_GASKET
         );
         topGasket.position.set(originX, topYDisplacement + 10, zDisplacement);
         topGasket.rotation.y = rot90Deg;

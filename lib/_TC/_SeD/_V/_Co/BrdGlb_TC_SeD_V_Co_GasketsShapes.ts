@@ -1,4 +1,6 @@
-import { THREE } from "../../../../../../V3d/srv/assets/ts/Brd3Dv_Deps.ts";
+import {
+  THREE
+} from "../../../../deps.ts";
 
 export interface BrdGlb_TC_SeD_V_Co_GasketsShapes {
   topBottomAluProfile: THREE.Shape;

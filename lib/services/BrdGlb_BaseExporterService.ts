@@ -50,8 +50,12 @@ export class BrdGlb_BaseExporterService {
     /**
      * Flag che indica se siamo nell'edge di Deno Deploy
      */
-    protected static readonly IS_DEPLOY = Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
-
+    protected static get IS_DEPLOY() {
+        const r = (Deno == undefined) ?
+            false :
+            Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
+        return r;
+    }
 
     //--------------------------------------------------------------------------
     // #region Utilities
@@ -111,27 +115,27 @@ export class BrdGlb_BaseExporterService {
             }
             switch (op.operation) {
                 case Blm.BrdBlm_ePlacementOperation.TRANSLATE_X_IN_MM: {
-                    r1.rotateX(value);
-                    break;
-                }
-                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_Y_IN_MM: {
-                    r1.rotateY(value);
-                    break;
-                }
-                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_Z_IN_MM: {
-                    r1.rotateX(value);
-                    break;
-                }
-                case Blm.BrdBlm_ePlacementOperation.ROTATE_X_IN_RAD: {
                     r1.translateX(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.ROTATE_Y_IN_RAD: {
+                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_Y_IN_MM: {
                     r1.translateY(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.ROTATE_Z_IN_RAD: {
+                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_Z_IN_MM: {
                     r1.translateZ(value);
+                    break;
+                }
+                case Blm.BrdBlm_ePlacementOperation.ROTATE_X_IN_RAD: {
+                    r1.rotateX(value);
+                    break;
+                }
+                case Blm.BrdBlm_ePlacementOperation.ROTATE_Y_IN_RAD: {
+                    r1.rotateY(value);
+                    break;
+                }
+                case Blm.BrdBlm_ePlacementOperation.ROTATE_Z_IN_RAD: {
+                    r1.rotateZ(value);
                     break;
                 }
             }
@@ -162,7 +166,7 @@ export class BrdGlb_BaseExporterService {
 
     protected static buildPlanesHelpers(
         asizeInMM = 10000,
-        adivisions = 25
+        adivisions = 10
     ) {
 
         const r = new THREE.Object3D();
@@ -172,16 +176,16 @@ export class BrdGlb_BaseExporterService {
         const gridHelperXZ = new THREE.GridHelper(
             size,
             divisions,
-            16711935,
-            16744703
+            0xf08080,
+            0xf0b0b0
         );
         r.add(gridHelperXZ);
 
         const gridHelperXY = new THREE.GridHelper(
             size,
             divisions,
-            16776960,
-            16777088
+            0x80f080,
+            0xb0f0b0
         );
         gridHelperXY.rotateX(this.RAD_90);
         r.add(gridHelperXY);
@@ -189,8 +193,8 @@ export class BrdGlb_BaseExporterService {
         const gridHelperZY = new THREE.GridHelper(
             size,
             divisions,
-            65535,
-            8454143
+            0x8080f0,
+            0xb0b0f0
         );
         gridHelperZY.rotateZ(this.RAD_90);
         r.add(gridHelperZY);
@@ -201,12 +205,12 @@ export class BrdGlb_BaseExporterService {
 
     // #endregion
     //--------------------------------------------------------------------------
-    
+
 
     //--------------------------------------------------------------------------
     // #region Extruders
-    
-    
+
+
     protected static extrudeXYShapeAlongZ(
         ashape: THREE.Shape,
         adepth: number,
@@ -234,6 +238,7 @@ export class BrdGlb_BaseExporterService {
         return r;
 
     }
+
 
 
     protected static extrudeXYShapeAlongPath(
@@ -293,6 +298,8 @@ export class BrdGlb_BaseExporterService {
         return r;
     }
 
+
+
     protected static randomExtrusionPathAlongZForTest() {
         const randomPoints = [];
 
@@ -309,6 +316,8 @@ export class BrdGlb_BaseExporterService {
         const r = new THREE.CatmullRomCurve3(randomPoints);
         return r;
     }
+
+
 
     protected static getRandomExtrudedGeometryAlongZForTest(
         ashape: THREE.Shape,
@@ -327,13 +336,13 @@ export class BrdGlb_BaseExporterService {
 
     // #endregion
     //--------------------------------------------------------------------------
-    
-    
+
+
     //--------------------------------------------------------------------------
     // #region Export
-    
-    
-    static #buildStl(ascene: THREE.Scene) {
+
+
+    protected static buildStl(ascene: THREE.Scene) {
 
         const exporter = new THREE_STLExporter();
         const options = {
@@ -353,7 +362,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    static async #buildGltf(ascene: THREE.Scene) {
+    protected static async buildGltf(ascene: THREE.Scene) {
 
         const exporter = new THREE_GLTFExporter();
         const options = {
@@ -373,7 +382,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    static async #buildGlb(ascene: THREE.Scene) {
+    protected static async buildGlb(ascene: THREE.Scene) {
 
         const exporter = new THREE_GLTFExporter();
         const options = {
@@ -393,7 +402,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    static async Export(
+    protected static async export(
         ascene: THREE.Scene,
         adoBinary = true
     ) {
@@ -402,7 +411,7 @@ export class BrdGlb_BaseExporterService {
 
         if (adoBinary) {
 
-            const arrBuff = await this.#buildGlb(ascene);
+            const arrBuff = await this.buildGlb(ascene);
             const uint8Arr = new Uint8Array(arrBuff);
 
             if (!this.IS_DEPLOY) {
@@ -413,11 +422,11 @@ export class BrdGlb_BaseExporterService {
         }
         else {
 
-            const gltf = await this.#buildGltf(ascene);
+            const gltf = await this.buildGltf(ascene);
 
             if (!this.IS_DEPLOY) {
                 Deno.writeTextFileSync('./srv/test/output/' + ascene.name + '.gltf', gltf);
-                const stl = this.#buildStl(ascene);
+                const stl = this.buildStl(ascene);
                 Deno.writeTextFileSync('./srv/test/output/' + ascene.name + '.stl', stl);
             }
 

@@ -1,5 +1,5 @@
 /** ---------------------------------------------------------------------------
- * @module [BrdGlb]
+ * @module [BrdGlb_TC_SeD]
  * @author [APG] Angeli Paolo Giusto
  * @version 0.1 APG 20230707
  * @version 0.2 APG 20231115 Spostato nel suo file dedicato + Commenti e refactoring
@@ -7,9 +7,8 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-  Blm
-} from "../../../deps.ts";
+
+import * as Blm from "../../../../../Blm/modForGlb.ts"
 import {
   BrdGlb_IBumpMapDef
 } from "../../../interfaces/BrdGlb_IBumpMapDef.ts";
@@ -17,46 +16,50 @@ import {
 
 
 
+const variant = Blm.BrdBlm_TC_SeD_eFinishVariant;
+
 type BrdGlb_TC_SeD_TFoamedPanelFinishVariant_Recordset = Record<
-  Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant,
+  Blm.BrdBlm_TC_SeD_eFinishVariant,
   BrdGlb_IBumpMapDef
 >;
+
+
 
 
 /**
  * Gestione delle goffrature per le varianti finitura pannelli schiumati
  */
-export const BrdBlm_TC_SeD_FoamedPanelFinishVariant_Recordset: BrdGlb_TC_SeD_TFoamedPanelFinishVariant_Recordset = {
+export const BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset: BrdGlb_TC_SeD_TFoamedPanelFinishVariant_Recordset = {
   
-  [Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.STUCCO]: {
+  [variant.STUCCO]: {
     bumpMap: "Brd3DvStucco_BumpMap_256.jpg",
     depth: 10,
     uScale: 1000 / 125,
     vScale: 1000 / 125,
   },
   
-  [Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.WOOD_GRAIN]: {
+  [variant.WOOD_GRAIN]: {
     bumpMap: "Brd3DvWoodGrain_BumpMap_256.jpg",
     depth: 10,
     uScale: 1000 / 125,
     vScale: 1000 / 125,
   },
   
-  [Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.SMOOTH]: {
+  [variant.SMOOTH]: {
     bumpMap: "",
     depth: 0,
     uScale: 1,
     vScale: 1,
   },
   
-  [Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.ULTRA_TOUCH]: {
+  [variant.ULTRA_TOUCH]: {
     bumpMap: "",
     depth: 0,
     uScale: 1,
     vScale: 1,
   },
   
-  [Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.MULTIRIB]: {
+  [variant.MULTIRIB]: {
     bumpMap: "Brd3DvMultirib_BumpMap_64.jpg",
     depth: 10,
     uScale: 1000 / 125,

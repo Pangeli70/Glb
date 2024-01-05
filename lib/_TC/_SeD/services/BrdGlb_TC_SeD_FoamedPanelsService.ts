@@ -1,15 +1,5 @@
-/*! ---------------------------------------------------------------------------
- * @copyright Breda Sistemi industriali S.p.A., 2023 - http://bredasys.com
- * All rights reserved
- * @licence You cannot host, display, distribute or share this Work in any
- * form, both physical and digital. You cannot use this Work in any commercial
- * or non-commercial product, website or project. You cannot sell this Work
- * and you cannot mint an NFTs out of it.
- * ----------------------------------------------------------------------------
- */
-
 /** ---------------------------------------------------------------------------
- * @module [Brd/3Dv]
+ * @module [BrdGlb_TC_SeD]
  * @author [APG] Angeli Paolo Giusto
  * @version 0.1 DLV 20230626
  * @version 0.2 APG 20230720
@@ -19,19 +9,15 @@
 
 //-----------------------------------------------------------------------------
 // #region Imports
-import {
-    Blm
-} from "../../../deps.ts";
-import {
-    THREE
-} from "../../../../../V3d/srv/assets/ts/Brd3Dv_Deps.ts";
-import {
-    Brd3Dv_eParts,
-} from "../../../../../V3d/srv/assets/ts_old/__/__Brd3Dv_Enums.ts";
 
 import {
-    BrdGlb_IIntExtShapes
-} from "../../../interfaces/BrdGlb_IIntExtShapes.ts";
+    Blm,
+    Uts,
+    THREE
+} from "../../../deps.ts";
+import {
+    BrdGlb_eLayers
+} from "../../../enums/BrdGlb_eLayers.ts";
 import {
     BrdGlb_IIntExtGeometries
 } from "../../../interfaces/BrdGlb_IIntExtGeometries.ts";
@@ -42,27 +28,23 @@ import {
     BrdGlb_IIntExtMeshes
 } from "../../../interfaces/BrdGlb_IIntExtMeshes.ts";
 import {
+    BrdGlb_IIntExtShapes
+} from "../../../interfaces/BrdGlb_IIntExtShapes.ts";
+import {
     BrdGlb_HoleService
 } from "../../../services/BrdGlb_HoleService.ts";
-import { 
-    BrdUts_Logger
-} from "../../../../../Uts/lib/classes/BrdUts_Logger.ts";
-import { 
-    BrdBlm_TC_SeD_FoamedPanelsOutlines_Service 
-} from "../../../../../Blm/lib/_TC/_SeD/services/BrdBlm_TC_SeD_FoamedPanelsOutlines_Service.ts";
-import { 
-    BrdGlb_ShapeService 
+import {
+    BrdGlb_ShapeService
 } from "../../../services/BrdGlb_ShapeService.ts";
-import { 
-    BrdGlb_UVRemapperService 
+import {
+    BrdGlb_UVRemapperService
 } from "../../../services/BrdGlb_UVRemapperService.ts";
-import { BrdGlb_eLayers } from "../../../enums/BrdGlb_eLayers.ts";
 
 // #endregion
 //-----------------------------------------------------------------------------
 
 
-export const BRD_3DV_SECTIONS_BUILDER_MODULE_NAME = "Brd3DvSectionsBuilder";
+export const MODULE_NAME = "Brd3DvSectionsBuilder";
 
 
 
@@ -71,11 +53,11 @@ export const BRD_3DV_SECTIONS_BUILDER_MODULE_NAME = "Brd3DvSectionsBuilder";
  */
 export class BrdGlb_TC_SeD_FoamedPanelsService {
 
-    private _logger: BrdUts_Logger;
+    private _logger: Uts.BrdUts_Logger;
 
 
 
-    constructor(alogger: BrdUts_Logger) {
+    constructor(alogger: Uts.BrdUts_Logger) {
 
         this._logger = alogger;
 
@@ -108,7 +90,7 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
      */
     #getFoamedPanelShapes(aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams) {
 
-        const outlines = BrdBlm_TC_SeD_FoamedPanelsOutlines_Service.getFoamedPanelOutlines(aparams);
+        const outlines = Blm.TC.SeD.BrdBlm_TC_SeD_FoamedPanelsOutlines_Service.getFoamedPanelOutlines(aparams);
 
         const extShape = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(outlines.ext);
         const intShape = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(outlines.int);
@@ -151,7 +133,7 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
         r.ext.castShadow = true;
 
         r.ext.layers.set(BrdGlb_eLayers.TC_SeD_COAT);
-        r.ext.name = Brd3Dv_eParts.PRODUCT_VSeD_SECTION_OUTSIDE;
+        r.ext.name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.SECTION_OUTSIDE;
 
 
         // Interno
@@ -163,7 +145,7 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
         r.int.castShadow = true;
 
         r.int.layers.set(BrdGlb_eLayers.TC_SeD_COAT);
-        r.int.name = Brd3Dv_eParts.PRODUCT_VSeD_SECTION_INSIDE;
+        r.int.name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.SECTION_INSIDE;
 
 
         return r;
@@ -225,3 +207,14 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
 
 
 }
+
+
+/*! ---------------------------------------------------------------------------
+ * @copyright Breda Sistemi industriali S.p.A., 2023 - http://bredasys.com
+ * All rights reserved
+ * @licence You cannot host, display, distribute or share this Work in any
+ * form, both physical and digital. You cannot use this Work in any commercial
+ * or non-commercial product, website or project. You cannot sell this Work
+ * and you cannot mint an NFTs out of it.
+ * ----------------------------------------------------------------------------
+ */
