@@ -90,7 +90,7 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
      */
     #getFoamedPanelShapes(aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams) {
 
-        const outlines = Blm.TC.SeD.BrdBlm_TC_SeD_FoamedPanelsOutlines_Service.getFoamedPanelOutlines(aparams);
+        const outlines = Blm.TC.SeD.BrdBlm_TC_SeD_FoamedPanelsOutlines_Service.getOutlines(aparams);
 
         const extShape = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(outlines.ext);
         const intShape = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(outlines.int);
