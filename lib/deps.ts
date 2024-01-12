@@ -12,9 +12,12 @@ export { STLExporter as THREE_STLExporter } from "https://esm.sh/three@0.154.0/e
 
 export { GLTFLoader as THREE_GLTFLoader } from "https://esm.sh/three@0.154.0/examples/jsm/loaders/GLTFLoader.js";
 export type { GLTF } from "https://esm.sh/three@0.154.0/examples/jsm/loaders/GLTFLoader.js";
-export { STLLoader as THREE_STLLoader} from "https://esm.sh/three@0.154.0/examples/jsm/loaders/STLLoader.js";
+export { STLLoader as THREE_STLLoader } from "https://esm.sh/three@0.154.0/examples/jsm/loaders/STLLoader.js";
 
 export { CSG as THREE_CSG } from "https://esm.sh/three-csg-ts@3.1.13";
+
+export const Brd3Dv_AssetsServer = "";
+
 
 // Local repo
 export * from "../../Blm/mod.ts";
