@@ -21,7 +21,7 @@ export const Brd3Dv_AssetsServer = "";
 
 // Local repo
 export * from "../../Blm/mod.ts";
-export * from "../../Uts/modBrowser.ts";
+export * from "../../Uts/modFor3Dv.ts";
 
 // Github repo
 // export * from "../../Blm/mod.ts";

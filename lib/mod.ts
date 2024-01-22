@@ -1,5 +1,6 @@
 /** ---------------------------------------------------------------------------
- * @module [BrdGlb] Creazione delle Scene 3D server side per i prodotti Breda
+ * @module [BrdGlb] 
+ * @description Creazione delle Scene 3D server side per i prodotti Breda
  * @author [APG] Angeli Paolo Giusto 
  * @version 0.1 APG 20231202
  * @version 0.2 APG 20231226 Spostato nel modulo BrdGlb

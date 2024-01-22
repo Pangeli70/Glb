@@ -1,0 +1,1 @@
+export * as Glb from "./lib/modFor3Dv.ts"
