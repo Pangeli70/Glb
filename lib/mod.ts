@@ -20,8 +20,6 @@ export * from "./interfaces/BrdGlb_IMaterialDef.ts"
 export * from "./interfaces/BrdGlb_IMeshCouple.ts"
 export * from "./interfaces/BrdGlb_ITextureDef.ts"
 
-export * from "./recordsets/BrdGlb_Layers_MultilangRecordset.ts"
-
 export * from "./services/BrdGlb_BaseExporterService.ts"
 //export * from "./services/BrdGlb_HoleService.ts"
 export * from "./services/BrdGlb_ShapeService.ts"

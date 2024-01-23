@@ -8,4 +8,3 @@
 
 export * from "./enums/BrdGlb_eLayers.ts"
 
-export * from "./recordsets/BrdGlb_Layers_MultilangRecordset.ts"
