@@ -6,5 +6,5 @@
  * ----------------------------------------------------------------------------
 */
 
-export * from "./enums/BrdGlb_eLayers.ts"
+export * from "./enums/BrdGlb_eLayer.ts"
 

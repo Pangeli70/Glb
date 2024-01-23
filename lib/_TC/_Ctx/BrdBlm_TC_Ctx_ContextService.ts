@@ -9,8 +9,8 @@
  */
 
 import {
-    BrdGlb_eLayers
-} from "../../enums/BrdGlb_eLayers.ts";
+    BrdGlb_eLayer
+} from "../../enums/BrdGlb_eLayer.ts";
 import {
     BrdGlb_ShapeService
 } from "../../services/BrdGlb_ShapeService.ts";
@@ -516,7 +516,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontextMaterials.externWall
         );
 
-        r.layers.set(BrdGlb_eLayers.CONTEXT);
+        r.layers.set(BrdGlb_eLayer.CONTEXT);
         r.name = name;
 
         return r;
@@ -537,7 +537,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontext.floorDepth,
             acontextMaterials.externPavement,
         );
-        r.layers.set(BrdGlb_eLayers.CONTEXT);
+        r.layers.set(BrdGlb_eLayer.CONTEXT);
         r.name = name;
 
         return r;
@@ -558,7 +558,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontext.wallThickness,
             acontextMaterials.externThreshold
         );
-        r.layers.set(BrdGlb_eLayers.CONTEXT);
+        r.layers.set(BrdGlb_eLayer.CONTEXT);
         r.name = name;
 
         return r;
@@ -579,7 +579,7 @@ export class BrdBlm_TC_Ctx_Service {
             randomizedBaseboardHeight,
             acontextMaterials.externBaseboards
         );
-        leftBaseboardMesh.layers.set(BrdGlb_eLayers.CONTEXT);
+        leftBaseboardMesh.layers.set(BrdGlb_eLayer.CONTEXT);
         leftBaseboardMesh.name = BrdBlm_TC_Ctx_ePartName.EXTERN_BASEBOARDS;
 
         const rightBaseboardMesh = this.#extrudeXYShapeAlongZ(
@@ -587,7 +587,7 @@ export class BrdBlm_TC_Ctx_Service {
             randomizedBaseboardHeight,
             acontextMaterials.externBaseboards
         );
-        rightBaseboardMesh.layers.set(BrdGlb_eLayers.CONTEXT);
+        rightBaseboardMesh.layers.set(BrdGlb_eLayer.CONTEXT);
         rightBaseboardMesh.name = BrdBlm_TC_Ctx_ePartName.EXTERN_BASEBOARDS;
 
         return {
@@ -610,7 +610,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontextMaterials.internWalls
         );
         leftWallMesh.position.z = -acontext.floorDepth;
-        leftWallMesh.layers.set(BrdGlb_eLayers.CONTEXT_INSIDE);
+        leftWallMesh.layers.set(BrdGlb_eLayer.CONTEXT_INSIDE);
         leftWallMesh.name = BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL;
 
         const rightWallMesh = this.#extrudeXYShapeAlongZ(
@@ -619,7 +619,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontextMaterials.internWalls
         );
         rightWallMesh.position.z = -acontext.floorDepth;
-        rightWallMesh.layers.set(BrdGlb_eLayers.CONTEXT_INSIDE);
+        rightWallMesh.layers.set(BrdGlb_eLayer.CONTEXT_INSIDE);
         rightWallMesh.name = BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL;
 
         const r = {
@@ -645,7 +645,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontextMaterials.internFloor
         );
         floorMesh.position.z = - acontext.floorDepth;
-        floorMesh.layers.set(BrdGlb_eLayers.CONTEXT_INSIDE);
+        floorMesh.layers.set(BrdGlb_eLayer.CONTEXT_INSIDE);
         floorMesh.name = BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR;
 
         const ceilingMesh = this.#extrudeXYShapeAlongZ(
@@ -654,7 +654,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontextMaterials.internCeiling
         );
         ceilingMesh.position.z = - acontext.floorDepth;
-        ceilingMesh.layers.set(BrdGlb_eLayers.CONTEXT_INSIDE);
+        ceilingMesh.layers.set(BrdGlb_eLayer.CONTEXT_INSIDE);
         ceilingMesh.name = BrdBlm_TC_Ctx_ePartName.INTERN_CEILING;
 
         const r = {

@@ -10,7 +10,7 @@
 /**
  * Livelli utilizzati dal visualizzatore 3D
  */
-export enum BrdGlb_eLayers {
+export enum BrdGlb_eLayer {
   DEFAULT = 0,
   LIGHTS = 1,
   HELPERS = 2,

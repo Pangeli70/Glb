@@ -16,8 +16,8 @@ import {
     THREE
 } from "../../../deps.ts";
 import {
-    BrdGlb_eLayers
-} from "../../../enums/BrdGlb_eLayers.ts";
+    BrdGlb_eLayer
+} from "../../../enums/BrdGlb_eLayer.ts";
 import {
     BrdGlb_IIntExtGeometries
 } from "../../../interfaces/BrdGlb_IIntExtGeometries.ts";
@@ -132,7 +132,7 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
         r.ext.receiveShadow = true;
         r.ext.castShadow = true;
 
-        r.ext.layers.set(BrdGlb_eLayers.TC_SeD_COAT);
+        r.ext.layers.set(BrdGlb_eLayer.TC_SeD_COAT);
         r.ext.name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.SECTION_OUTSIDE;
 
 
@@ -144,7 +144,7 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
         r.int.receiveShadow = true;
         r.int.castShadow = true;
 
-        r.int.layers.set(BrdGlb_eLayers.TC_SeD_COAT);
+        r.int.layers.set(BrdGlb_eLayer.TC_SeD_COAT);
         r.int.name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.SECTION_INSIDE;
 
 
