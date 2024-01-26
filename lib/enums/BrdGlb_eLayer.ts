@@ -4,6 +4,7 @@
  * @version 0.1 APG 20230707
  * @version 0.2 APG 20231115 Spostato nel suo file dedicato + Commenti e refactoring
  * @version 0.3 APG 20231227 Modulo BrdGlb server side
+ * @version 0.4 APG 20240125 Aggiornato e riorganizzato elenco
  * ----------------------------------------------------------------------------
  */
 
@@ -11,16 +12,27 @@
  * Livelli utilizzati dal visualizzatore 3D
  */
 export enum BrdGlb_eLayer {
-  DEFAULT = 0,
-  LIGHTS = 1,
-  HELPERS = 2,
-  CONTEXT = 10,
-  CONTEXT_INSIDE = 11,
-  TC_SeD_COAT = 20,
-  TC_SeD_ST = 21,
-  PRODUCT_BALANCING = 22,
-  PRODUCT_MOVING_AIDS = 23,
-  PRODUCT_BLACK_AND_WHITE = 24
+
+    DEFAULT = 0,
+
+    BACKGROUND = 1,
+    CURSORS = 2,
+    HELPERS = 3,
+    EDGES = 4,
+
+    PRODUCT_ADAPTERS = 10,
+    PRODUCT_SLIDING = 11,
+    PRODUCT_BALANCING = 12,
+    PRODUCT_COAT = 13,
+    PRODUCT_COAT_INSERTS = 14,
+    PRODUCT_COAT_FILLINGS = 15,
+    PRODUCT_MOVING_AIDS = 16,
+
+    CONTEXT_OUTSIDE = 20,
+    CONTEXT_INSIDE = 21,
+    CONTEXT_VEHICLES = 22,
+    CONTEXT_CHARACTERS = 23,
+    CONTEXT_ENVIRONMENT = 24,
 }
 
 /*! ---------------------------------------------------------------------------

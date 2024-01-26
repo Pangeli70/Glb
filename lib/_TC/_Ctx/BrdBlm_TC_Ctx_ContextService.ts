@@ -516,7 +516,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontextMaterials.externWall
         );
 
-        r.layers.set(BrdGlb_eLayer.CONTEXT);
+        r.layers.set(BrdGlb_eLayer.CONTEXT_OUTSIDE);
         r.name = name;
 
         return r;
@@ -537,7 +537,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontext.floorDepth,
             acontextMaterials.externPavement,
         );
-        r.layers.set(BrdGlb_eLayer.CONTEXT);
+        r.layers.set(BrdGlb_eLayer.CONTEXT_OUTSIDE);
         r.name = name;
 
         return r;
@@ -558,7 +558,7 @@ export class BrdBlm_TC_Ctx_Service {
             acontext.wallThickness,
             acontextMaterials.externThreshold
         );
-        r.layers.set(BrdGlb_eLayer.CONTEXT);
+        r.layers.set(BrdGlb_eLayer.CONTEXT_OUTSIDE);
         r.name = name;
 
         return r;
@@ -579,7 +579,7 @@ export class BrdBlm_TC_Ctx_Service {
             randomizedBaseboardHeight,
             acontextMaterials.externBaseboards
         );
-        leftBaseboardMesh.layers.set(BrdGlb_eLayer.CONTEXT);
+        leftBaseboardMesh.layers.set(BrdGlb_eLayer.CONTEXT_OUTSIDE);
         leftBaseboardMesh.name = BrdBlm_TC_Ctx_ePartName.EXTERN_BASEBOARDS;
 
         const rightBaseboardMesh = this.#extrudeXYShapeAlongZ(
@@ -587,7 +587,7 @@ export class BrdBlm_TC_Ctx_Service {
             randomizedBaseboardHeight,
             acontextMaterials.externBaseboards
         );
-        rightBaseboardMesh.layers.set(BrdGlb_eLayer.CONTEXT);
+        rightBaseboardMesh.layers.set(BrdGlb_eLayer.CONTEXT_OUTSIDE);
         rightBaseboardMesh.name = BrdBlm_TC_Ctx_ePartName.EXTERN_BASEBOARDS;
 
         return {
