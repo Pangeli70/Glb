@@ -13,26 +13,28 @@
  */
 export enum BrdGlb_eLayer {
 
-    DEFAULT = 0,
+    UNSET = "0",
+    
+    DEFAULT = "1",
+    BACKGROUND = "2",
+    CURSORS = "3",
+    HELPERS = "4",
+    EDGES = "5",
 
-    BACKGROUND = 1,
-    CURSORS = 2,
-    HELPERS = 3,
-    EDGES = 4,
+    PRODUCT_ADAPTERS = "10",
+    PRODUCT_SLIDING = "11",
+    PRODUCT_BALANCING = "12",
+    PRODUCT_COAT = "13",
+    PRODUCT_COAT_INSERTS = "14",
+    PRODUCT_COAT_FILLINGS = "15",
+    PRODUCT_MOVING_AIDS = "16",
 
-    PRODUCT_ADAPTERS = 10,
-    PRODUCT_SLIDING = 11,
-    PRODUCT_BALANCING = 12,
-    PRODUCT_COAT = 13,
-    PRODUCT_COAT_INSERTS = 14,
-    PRODUCT_COAT_FILLINGS = 15,
-    PRODUCT_MOVING_AIDS = 16,
+    CONTEXT_OUTSIDE = "20",
+    CONTEXT_INSIDE = "21",
+    CONTEXT_VEHICLES = "22",
+    CONTEXT_CHARACTERS = "23",
+    CONTEXT_ENVIRONMENT = "24",
 
-    CONTEXT_OUTSIDE = 20,
-    CONTEXT_INSIDE = 21,
-    CONTEXT_VEHICLES = 22,
-    CONTEXT_CHARACTERS = 23,
-    CONTEXT_ENVIRONMENT = 24,
 }
 
 /*! ---------------------------------------------------------------------------

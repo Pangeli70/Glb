@@ -8,3 +8,5 @@
 
 export * from "./enums/BrdGlb_eLayer.ts"
 
+export * from "./interfaces/BrdGlb_IStaticModel.ts"
+
