@@ -5,14 +5,14 @@
  * ----------------------------------------------------------------------------
  */
 
-export * as THREE from "https://esm.sh/three@0.154.0/build/three.module.js";
+export * as THREE from "https://esm.sh/three@0.160.0/build/three.module.js";
 
-export { GLTFExporter as THREE_GLTFExporter } from "https://esm.sh/three@0.154.0/examples/jsm/exporters/GLTFExporter.js";
-export { STLExporter as THREE_STLExporter } from "https://esm.sh/three@0.154.0/examples/jsm/exporters/STLExporter.js";
+export { GLTFExporter as THREE_GLTFExporter } from "https://esm.sh/three@0.160/examples/jsm/exporters/GLTFExporter.js";
+export { STLExporter as THREE_STLExporter } from "https://esm.sh/three@0.160.0/examples/jsm/exporters/STLExporter.js";
 
-export { GLTFLoader as THREE_GLTFLoader } from "https://esm.sh/three@0.154.0/examples/jsm/loaders/GLTFLoader.js";
-export type { GLTF } from "https://esm.sh/three@0.154.0/examples/jsm/loaders/GLTFLoader.js";
-export { STLLoader as THREE_STLLoader } from "https://esm.sh/three@0.154.0/examples/jsm/loaders/STLLoader.js";
+export { GLTFLoader as THREE_GLTFLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+export type { GLTF } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+export { STLLoader as THREE_STLLoader } from "https://esm.sh/three@0.160.0/examples/jsm/loaders/STLLoader.js";
 
 export { CSG as THREE_CSG } from "https://esm.sh/three-csg-ts@3.1.13";
 
