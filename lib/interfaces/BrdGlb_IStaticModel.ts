@@ -8,6 +8,7 @@
 import {
     BrdGlb_eLayer
 } from "../enums/BrdGlb_eLayer.ts";
+import { BrdGlb_IPoint3D } from "./BrdGlb_IPoint3D.ts";
 
 
 export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel";
@@ -19,6 +20,8 @@ export interface BrdGlb_IStaticModel {
     readonly signature: "BrdGlb_IStaticModel",
     name: string;
     asset: string;
+    position: BrdGlb_IPoint3D,
+    scale: number;
     layer: BrdGlb_eLayer
 }
 

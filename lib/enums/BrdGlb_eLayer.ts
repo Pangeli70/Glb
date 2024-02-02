@@ -19,7 +19,8 @@ export enum BrdGlb_eLayer {
     BACKGROUND = "2",
     CURSORS = "3",
     HELPERS = "4",
-    EDGES = "5",
+    PROBES = "5",
+    EDGES = "6",
 
     PRODUCT_ADAPTERS = "10",
     PRODUCT_SLIDING = "11",
