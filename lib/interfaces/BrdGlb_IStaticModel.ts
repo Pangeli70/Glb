@@ -8,21 +8,27 @@
 import {
     BrdGlb_eLayer
 } from "../enums/BrdGlb_eLayer.ts";
-import { BrdGlb_IPoint3D } from "./BrdGlb_IPoint3D.ts";
+import {
+    BrdGlb_IPoint3D
+} from "./BrdGlb_IPoint3D.ts";
 
 
-export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel";
+export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel_Signature";
+
 
 /**
- * Modello statico creato da servito da qualche CDN
+ * Modello statico creato o servito da qualche CDN
  */
 export interface BrdGlb_IStaticModel {
-    readonly signature: "BrdGlb_IStaticModel",
+    readonly signature: "BrdGlb_IStaticModel_Signature",
     name: string;
     asset: string;
     position: BrdGlb_IPoint3D,
     scale: number;
-    layer: BrdGlb_eLayer
+    layer: BrdGlb_eLayer,
+    model?: THREE.Object3D,
+    loaded?: boolean,
+    enabled?: boolean
 }
 
 
