@@ -153,7 +153,7 @@ export class BrdGlb_BaseExporterService {
         acouple: BrdGlb_IMeshCouple,
         operations: Blm.BrdBlm_IPlacementOperation[]
     ) {
-        const r: THREE.Object3D<THREE.Event>[] = [];
+        const r: THREE.Object3D[] = [];
 
         r.push(this.placeMeshWithOperations(acouple.right, operations, false));
 

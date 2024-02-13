@@ -13,8 +13,8 @@ import {
     Uts
 } from "../../../../../deps.ts";
 import {
-    BrdGlb_eLayers
-} from "../../../../../enums/BrdGlb_eLayers.ts";
+    BrdGlb_eLayer
+} from "../../../../../enums/BrdGlb_eLayer.ts";
 import {
     BrdGlb_ShapeService
 } from "../../../../../services/BrdGlb_ShapeService.ts";
@@ -144,7 +144,8 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         r.receiveShadow = true;
         r.castShadow = true;
 
-        r.layers.set(BrdGlb_eLayers.TC_SeD_COAT);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_COAT);
+        r.layers.set(layer);
         r.name = aname;
         return r;
     }

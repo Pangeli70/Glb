@@ -12,8 +12,8 @@ import {
     THREE,
 } from "../../../../../deps.ts";
 import {
-    BrdGlb_eLayers
-} from "../../../../../enums/BrdGlb_eLayers.ts";
+    BrdGlb_eLayer
+} from "../../../../../enums/BrdGlb_eLayer.ts";
 import {
     BrdGlb_IMeshCouple
 } from "../../../../../interfaces/BrdGlb_IMeshCouple.ts";
@@ -306,7 +306,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.ANGLE_BARS_FIRST_STRETCH
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
     }
@@ -321,7 +322,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.ANGLE_BARS_SECOND_STRETCH
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
 
@@ -337,7 +339,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.HORIZONTAL_C_PROFILES
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
     };
@@ -352,7 +355,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.VERTICAL_TRACKS_FIRST_STRETCH
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
 
@@ -368,7 +372,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.VERTICAL_TRACKS_SECOND_STRETCH
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
 
@@ -385,7 +390,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.REGULAR_CURVES
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalRegularCurves(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalRegularCurves(layer, profile);
 
         return r;
 
@@ -401,7 +407,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.HORIZONTAL_TRACKS
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
 
@@ -417,7 +424,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_ePartName.HORIZONTAL_UPPER_TRACKS
         );
 
-        const r = this.#buildCoupleOfProfiledSheetMetalBars(BrdGlb_eLayers.TC_SeD_ST, profile);
+        const layer = parseInt(BrdGlb_eLayer.PRODUCT_SLIDING);
+        const r = this.#buildCoupleOfProfiledSheetMetalBars(layer, profile);
 
         return r;
 

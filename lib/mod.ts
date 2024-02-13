@@ -8,7 +8,7 @@
  * ----------------------------------------------------------------------------
  */
 
-export * from "./enums/BrdGlb_eLayers.ts"
+export * from "./enums/BrdGlb_eLayer.ts"
 
 export * from "./interfaces/BrdGlb_IBumpMapDef.ts"
 export * from "./interfaces/BrdGlb_IIntExtGeometries.ts"
