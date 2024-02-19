@@ -143,7 +143,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             this.LINEAR_EXTRUSION_STEP,
             material
         )
-        rightMesh.layers.set(alayer);
+        rightMesh.layers.disableAll();
+        rightMesh.layers.enable(alayer);
         rightMesh.name = aname + "_Right";
 
         const leftShape = this.#getMirroredShapeFromOutlineType(atype);
@@ -153,7 +154,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             this.LINEAR_EXTRUSION_STEP,
             material
         )
-        leftMesh.layers.set(alayer);
+        leftMesh.layers.disableAll();
+        leftMesh.layers.enable(alayer);
         leftMesh.name = aname + "_Left"
 
         const r: BrdGlb_IMeshCouple = {
@@ -184,7 +186,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             (apath.length + 4) * 2,
             material
         );
-        rightMesh.layers.set(alayer);
+        rightMesh.layers.disableAll();
+        rightMesh.layers.enable(alayer);
         rightMesh.name = aname + "_Right";
 
         const leftShape = this.#getMirroredShapeFromOutlineType(atype);
@@ -194,7 +197,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             (apath.length + 4) * 2,
             material
         );
-        leftMesh.layers.set(alayer);
+        leftMesh.layers.disableAll();
+        leftMesh.layers.enable(alayer);
         leftMesh.name = aname + "_Left";
 
         const r: BrdGlb_IMeshCouple = {
@@ -508,12 +512,13 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
     }
 
 
-    
+
     static async Export(
+        aid: string,
         ascene: THREE.Scene,
         adoBinary = true
-    ) { 
-        return await super.export(ascene, adoBinary);
+    ) {
+        return await super.export(aid, ascene, adoBinary);
     }
 
     // #endregion

@@ -13,14 +13,14 @@ import {
 } from "./BrdGlb_IPoint3D.ts";
 
 
-export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel_Signature";
+export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel_Signature_V1";
 
 
 /**
  * Modello statico creato o servito da qualche CDN
  */
 export interface BrdGlb_IStaticModel {
-    readonly signature: "BrdGlb_IStaticModel_Signature",
+    readonly signature: "BrdGlb_IStaticModel_Signature_V1",
     name: string;
     asset: string;
     position: BrdGlb_IPoint3D,

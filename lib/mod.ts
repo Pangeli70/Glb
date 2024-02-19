@@ -11,13 +11,14 @@
 export * from "./enums/BrdGlb_eLayer.ts"
 
 export * from "./interfaces/BrdGlb_IBumpMapDef.ts"
+export * from "./interfaces/BrdGlb_IDynamicModel.ts"
 export * from "./interfaces/BrdGlb_IIntExtGeometries.ts"
 export * from "./interfaces/BrdGlb_IIntExtMaterialDef.ts"
 export * from "./interfaces/BrdGlb_IIntExtMeshes.ts"
 export * from "./interfaces/BrdGlb_IIntExtShapes.ts"
-export * from "./interfaces/BrdGlb_IIntExtShapes.ts"
 export * from "./interfaces/BrdGlb_IMaterialDef.ts"
 export * from "./interfaces/BrdGlb_IMeshCouple.ts"
+export * from "./interfaces/BrdGlb_IStaticModel.ts"
 export * from "./interfaces/BrdGlb_ITextureDef.ts"
 
 export * from "./services/BrdGlb_BaseExporterService.ts"
@@ -25,7 +26,7 @@ export * from "./services/BrdGlb_BaseExporterService.ts"
 export * from "./services/BrdGlb_ShapeService.ts"
 export * from "./services/BrdGlb_UVRemapperService.ts"
 
-export * as TC from "./_TC/mod.ts";
+export * as TC from "./_TC/mod.ts"
 
 /*! ---------------------------------------------------------------------------
  * @copyright Breda Sistemi industriali S.p.A., 2023 - http://bredasys.com

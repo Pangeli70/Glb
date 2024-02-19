@@ -403,11 +403,19 @@ export class BrdGlb_BaseExporterService {
 
 
     protected static async export(
+        aId: string,
         ascene: THREE.Scene,
         adoBinary = true
     ) {
 
         let r: string | Uint8Array;
+
+        const file = './srv/test/output/' + ascene.name + '_' + aId;
+
+        if (!this.IS_DEPLOY) {
+            const stl = this.buildStl(ascene);
+            Deno.writeTextFileSync(file + '.stl', stl);
+        }
 
         if (adoBinary) {
 
@@ -415,7 +423,7 @@ export class BrdGlb_BaseExporterService {
             const uint8Arr = new Uint8Array(arrBuff);
 
             if (!this.IS_DEPLOY) {
-                Deno.writeFileSync('./srv/test/output/' + ascene.name + '.glb', uint8Arr);
+                Deno.writeFileSync(file + '.glb', uint8Arr);
             }
 
             r = uint8Arr;
@@ -425,9 +433,7 @@ export class BrdGlb_BaseExporterService {
             const gltf = await this.buildGltf(ascene);
 
             if (!this.IS_DEPLOY) {
-                Deno.writeTextFileSync('./srv/test/output/' + ascene.name + '.gltf', gltf);
-                const stl = this.buildStl(ascene);
-                Deno.writeTextFileSync('./srv/test/output/' + ascene.name + '.stl', stl);
+                Deno.writeTextFileSync(file + '.gltf', gltf);
             }
 
             r = gltf;
