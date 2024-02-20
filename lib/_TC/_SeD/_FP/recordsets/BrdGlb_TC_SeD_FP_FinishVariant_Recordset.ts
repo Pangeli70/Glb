@@ -8,17 +8,17 @@
  */
 
 
-import * as Blm from "../../../../../Blm/modForGlb.ts"
+import * as Blm from "../../../../../../Blm/modForGlb.ts"
 import {
   BrdGlb_IBumpMapDef
-} from "../../../interfaces/BrdGlb_IBumpMapDef.ts";
+} from "../../../../interfaces/BrdGlb_IBumpMapDef.ts";
 
 
 
 
 const variant = Blm.BrdBlm_TC_SeD_eFinishVariant;
 
-type BrdGlb_TC_SeD_TFoamedPanelFinishVariant_Recordset = Record<
+type BrdGlb_TC_SeD_FP_TFinishVariant_Recordset = Record<
   Blm.BrdBlm_TC_SeD_eFinishVariant,
   BrdGlb_IBumpMapDef
 >;
@@ -29,7 +29,7 @@ type BrdGlb_TC_SeD_TFoamedPanelFinishVariant_Recordset = Record<
 /**
  * Gestione delle goffrature per le varianti finitura pannelli schiumati
  */
-export const BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset: BrdGlb_TC_SeD_TFoamedPanelFinishVariant_Recordset = {
+export const BrdGlb_TC_SeD_FP_FinishVariant_Recordset: BrdGlb_TC_SeD_FP_TFinishVariant_Recordset = {
   
   [variant.STUCCO]: {
     bumpMap: "Brd3DvStucco_BumpMap_256.jpg",

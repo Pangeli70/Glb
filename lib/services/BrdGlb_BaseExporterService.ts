@@ -13,8 +13,15 @@ import {
     THREE_STLExporter
 } from "../deps.ts";
 import {
+    BrdGlb_eLayer
+} from "../enums/BrdGlb_eLayer.ts";
+import {
     BrdGlb_IMeshCouple
 } from "../interfaces/BrdGlb_IMeshCouple.ts";
+import {
+    BrdGlb_IUserData,
+    BrdGlb_IUserData_Signature
+} from "../interfaces/BrdGlb_IUserData.ts";
 import {
     BrdGlb_UVRemapperService
 } from "./BrdGlb_UVRemapperService.ts";
@@ -30,23 +37,28 @@ export class BrdGlb_BaseExporterService {
      * 90 gradi sessaggesimali in radianti
      */
     protected static readonly RAD_90 = Math.PI / 2;
+
     /**
      * 180 gradi sessaggesimali in radianti
      */
     protected static readonly RAD_180 = Math.PI;
+
     /**
      * Costante di conversione 1 grado sessaggesimale in radianti
      */
     protected static readonly RAD_1 = 2 * Math.PI / 360;
+
     /**
      * Flag per impostare i materiali in Wireframe per scopi di debug
      */
     protected static readonly DO_WIREFRAME = false;
+
     /**
      * Coefficiente di suddivisione delle estrusioni lineari.
      * Permette di gestire la complessità delle geometrie.
      */
     protected static readonly LINEAR_EXTRUSION_STEP = 1000;
+
     /**
      * Flag che indica se siamo nell'edge di Deno Deploy
      */
@@ -103,11 +115,13 @@ export class BrdGlb_BaseExporterService {
     ) {
 
         let r = new THREE.Object3D();
+        r.name = amesh.name + "_Ref";
         r.add(amesh);
 
         for (const op of aplacementOp) {
 
             const r1 = new THREE.Object3D();
+            r1.name = amesh.name + "_" + op.operation;
             r1.add(r);
             let value = op.value;
             if (adoFlip && op.isFlippable) {
@@ -165,11 +179,22 @@ export class BrdGlb_BaseExporterService {
 
 
     protected static buildPlanesHelpers(
+        aname: string,
         asizeInMM = 10000,
         adivisions = 10
     ) {
 
+        const name = aname + "_Planes"
+
+        const userData: BrdGlb_IUserData = {
+            signature: BrdGlb_IUserData_Signature,
+            layer: parseInt(BrdGlb_eLayer.HELPERS)
+        }
+        
         const r = new THREE.Object3D();
+        r.name = name;
+        r.userData = userData;
+
         const size = asizeInMM;
         const divisions = adivisions;
 
@@ -179,6 +204,8 @@ export class BrdGlb_BaseExporterService {
             0xf08080,
             0xf0b0b0
         );
+        gridHelperXZ.name = name + "_XZ";
+        gridHelperXZ.userData = userData;
         r.add(gridHelperXZ);
 
         const gridHelperXY = new THREE.GridHelper(
@@ -187,6 +214,8 @@ export class BrdGlb_BaseExporterService {
             0x80f080,
             0xb0f0b0
         );
+        gridHelperXY.name = name + "_XY";
+        gridHelperXY.userData = userData;
         gridHelperXY.rotateX(this.RAD_90);
         r.add(gridHelperXY);
 
@@ -196,6 +225,8 @@ export class BrdGlb_BaseExporterService {
             0x8080f0,
             0xb0b0f0
         );
+        gridHelperZY.name = name + "_ZY";
+        gridHelperZY.userData = userData;
         gridHelperZY.rotateZ(this.RAD_90);
         r.add(gridHelperZY);
 
@@ -229,10 +260,8 @@ export class BrdGlb_BaseExporterService {
         );
 
         const r = new THREE.Mesh(geometry, amaterial);
-
         r.receiveShadow = true;
         r.castShadow = true;
-
         BrdGlb_UVRemapperService.CubeMapping(r);
 
         return r;

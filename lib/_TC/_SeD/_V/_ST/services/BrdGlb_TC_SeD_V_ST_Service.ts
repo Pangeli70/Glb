@@ -18,6 +18,10 @@ import {
     BrdGlb_IMeshCouple
 } from "../../../../../interfaces/BrdGlb_IMeshCouple.ts";
 import {
+    BrdGlb_IUserData,
+    BrdGlb_IUserData_Signature
+} from "../../../../../interfaces/BrdGlb_IUserData.ts";
+import {
     BrdGlb_BaseExporterService
 } from "../../../../../services/BrdGlb_BaseExporterService.ts";
 import {
@@ -28,27 +32,15 @@ import {
 } from "../../../types/BrdGlb_TC_SeD_TSlidingTracksMaterials_Recordset.ts";
 
 
-/**
- * Formati di esportazione disponibili
- */
-export enum BrdGlb_eExportFormat {
-    GLTF = "gltf",
-    GLB = "glb",
-    STL = "stl"
-}
 
 /**
  * Gestore delle guide di scorrimento per i portoni sezionali verticali
  */
 export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
-
-
     private static _trackMaterials: BrdGlb_TC_SeD_TSlidingTracksMaterials_Recordset | null = null;
 
-
-
-    //-----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // #region Materials
 
 
@@ -78,7 +70,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
 
     static #getMaterialFromFinish(
-        afinish: Blm.TC.SeD.BrdBlm_TC_SeD_eSlidingTrackFinish) {
+        afinish: Blm.TC.SeD.BrdBlm_TC_SeD_eSlidingTrackFinish
+    ) {
 
         if (this._trackMaterials == null) {
             this.#initMaterials();
@@ -88,11 +81,11 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
     }
 
     // #endregion
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
 
 
-    //-----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // #region Shapes
 
 
@@ -119,11 +112,11 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
     }
 
     // #endregion
-    //------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
 
 
-    //-----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // #region Extrusions
 
     static #extrudeSlidingTrackCoupleAlongZ(
@@ -133,18 +126,23 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         afinish: Blm.TC.SeD.BrdBlm_TC_SeD_eSlidingTrackFinish,
         alayer: number
     ) {
+        const userData: BrdGlb_IUserData = {
+            signature: BrdGlb_IUserData_Signature,
+            layer: alayer
+        }
 
         const material = this.#getMaterialFromFinish(afinish);
 
         const rightShape = this.#getShapeFromOutlineType(atype);
+
         const rightMesh = this.extrudeXYShapeAlongZ(
             rightShape,
             alength,
             this.LINEAR_EXTRUSION_STEP,
             material
-        )
-        rightMesh.layers.disableAll();
-        rightMesh.layers.enable(alayer);
+        );
+
+        rightMesh.userData = userData;
         rightMesh.name = aname + "_Right";
 
         const leftShape = this.#getMirroredShapeFromOutlineType(atype);
@@ -154,8 +152,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             this.LINEAR_EXTRUSION_STEP,
             material
         )
-        leftMesh.layers.disableAll();
-        leftMesh.layers.enable(alayer);
+
+        leftMesh.userData = userData;
         leftMesh.name = aname + "_Left"
 
         const r: BrdGlb_IMeshCouple = {
@@ -176,6 +174,10 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         alayer: number
     ) {
 
+        const userData: BrdGlb_IUserData = {
+            signature: BrdGlb_IUserData_Signature,
+            layer: alayer
+        }
         const material = this.#getMaterialFromFinish(afinish);
         const pathSpline = new THREE.CatmullRomCurve3(apath);
 
@@ -186,8 +188,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             (apath.length + 4) * 2,
             material
         );
-        rightMesh.layers.disableAll();
-        rightMesh.layers.enable(alayer);
+        rightMesh.userData = userData;
         rightMesh.name = aname + "_Right";
 
         const leftShape = this.#getMirroredShapeFromOutlineType(atype);
@@ -197,8 +198,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             (apath.length + 4) * 2,
             material
         );
-        leftMesh.layers.disableAll();
-        leftMesh.layers.enable(alayer);
+        leftMesh.userData = userData;
         leftMesh.name = aname + "_Left";
 
         const r: BrdGlb_IMeshCouple = {
@@ -216,7 +216,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
 
 
-    //-----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // #region Extruded profiled sheet metal
 
 
@@ -262,8 +262,8 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             vectorPath.push(new THREE.Vector3(
                 p.x,
                 p.y,
-                // TODO Capire questo nasty hack necessario per fare estrudere 
-                // le curve le modo corretto. Se non si fa questo inverte le shape 
+                // TODO Capire questo nasty hack che è necessario per fare estrudere 
+                // le curve nel modo corretto. Se non si fa questo inverte le shape 
                 // quando estrude lungo il percorso. Ma facendo questo costringe a 
                 // fare una rotazione ulteriore di 180° sull'asse Y prima di 
                 // posizionare le curve -- APG 20231220
@@ -297,7 +297,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
 
 
-    //-----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // #region Stretches and curves
 
 
@@ -441,13 +441,16 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
 
 
-    //-----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // #region Scene
 
-    static BuildScene(aparams: Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_IParams) {
+    static Build(
+        aparams: Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_IParams
+    ) {
 
         const r = new THREE.Scene();
 
+        r.rotation.y = this.RAD_180;
         r.name = aparams.name;
 
         const data = Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_Service.GetComponents(aparams);
@@ -505,7 +508,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             r.add(upperHorizontalTracks[1]);
         }
 
-        const helpers = this.buildPlanesHelpers();
+        const helpers = this.buildPlanesHelpers(aparams.name);
         r.add(helpers);
 
         return r;
@@ -523,8 +526,6 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
     // #endregion
     //--------------------------------------------------------------------------
-
-
 
 
 

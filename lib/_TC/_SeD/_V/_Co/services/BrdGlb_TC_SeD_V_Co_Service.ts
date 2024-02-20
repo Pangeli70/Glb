@@ -22,8 +22,8 @@ import {
     BrdGlb_IIntExtMeshes
 } from "../../../../../interfaces/BrdGlb_IIntExtMeshes.ts";
 import {
-    BrdGlb_TC_SeD_FoamedPanelsService
-} from "../../../services/BrdGlb_TC_SeD_FoamedPanelsService.ts";
+    BrdGlb_TC_SeD_FP_Service
+} from "../../../_FP/services/BrdGlb_TC_SeD_FP_Service.ts";
 
 // #endregion
 //-----------------------------------------------------------------------------
@@ -94,12 +94,10 @@ export class BrdGlb_TC_SeD_V_Co_Service {
 
         const r: BrdGlb_IIntExtMeshes[] = [];
 
-        const foamedPanelBuilder = new BrdGlb_TC_SeD_FoamedPanelsService(this._logger);
-
         for (const section of adoor.sections) {
 
             if (section.family == Blm.TC.SeD.BrdBlm_TC_SeD_eSectionFamily.FOAMED) {
-                const panelMeshes = foamedPanelBuilder.build(section);
+                const panelMeshes = BrdGlb_TC_SeD_FP_Service.Build(section);
                 r.push(panelMeshes)
             }
             else {

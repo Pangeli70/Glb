@@ -32,8 +32,8 @@ import {
     BrdGlb_IMaterialDef
 } from "../../../../interfaces/BrdGlb_IMaterialDef.ts";
 import {
-    BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset
-} from "../../recordsets/BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset.ts";
+    BrdGlb_TC_SeD_FP_FinishVariant_Recordset
+} from "../../_FP/recordsets/BrdGlb_TC_SeD_FP_FinishVariant_Recordset.ts";
 import {
     BrdGlb_TC_SeD_SectionMaterials_Recordset
 } from "../../recordsets/BrdGlb_TC_SeD_SectionMaterials_Recordset.ts";
@@ -196,7 +196,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
                 type,
                 length: aconfig.W + 20, // TODO MAGIC Number -- APG 20231120
                 height: configSection.h,
-                yDisplacement,
+                displacement,
                 topCut,
                 bottomCut: 0,
             }
@@ -469,10 +469,10 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             material.map.repeat.setY(sectionMaterial.texture.vScale || 1);
         }
 
-        let finishVariant = BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset[afinishVariant];
+        let finishVariant = BrdGlb_TC_SeD_FP_FinishVariant_Recordset[afinishVariant];
 
         if (adesign == Blm.TC.SeD.BrdBlm_TC_SeD_eDesign.MULTIRIB) {
-            finishVariant = BrdGlb_TC_SeD_FoamedPanelFinishVariant_Recordset[Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.MULTIRIB];
+            finishVariant = BrdGlb_TC_SeD_FP_FinishVariant_Recordset[Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.MULTIRIB];
         }
 
         if (finishVariant && finishVariant.bumpMap) {

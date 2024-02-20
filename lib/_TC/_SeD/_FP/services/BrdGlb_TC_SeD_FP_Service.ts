@@ -12,33 +12,45 @@
 
 import {
     Blm,
-    Uts,
     THREE
-} from "../../../deps.ts";
+} from "../../../../deps.ts";
 import {
     BrdGlb_eLayer
-} from "../../../enums/BrdGlb_eLayer.ts";
+} from "../../../../enums/BrdGlb_eLayer.ts";
 import {
     BrdGlb_IIntExtGeometries
-} from "../../../interfaces/BrdGlb_IIntExtGeometries.ts";
+} from "../../../../interfaces/BrdGlb_IIntExtGeometries.ts";
 import {
     BrdGlb_IIntExtMaterialDef
-} from "../../../interfaces/BrdGlb_IIntExtMaterialDef.ts";
+} from "../../../../interfaces/BrdGlb_IIntExtMaterialDef.ts";
 import {
     BrdGlb_IIntExtMeshes
-} from "../../../interfaces/BrdGlb_IIntExtMeshes.ts";
+} from "../../../../interfaces/BrdGlb_IIntExtMeshes.ts";
 import {
     BrdGlb_IIntExtShapes
-} from "../../../interfaces/BrdGlb_IIntExtShapes.ts";
+} from "../../../../interfaces/BrdGlb_IIntExtShapes.ts";
+import {
+    BrdGlb_IUserData,
+    BrdGlb_IUserData_Signature
+} from "../../../../interfaces/BrdGlb_IUserData.ts";
+import {
+    BrdGlb_BaseExporterService
+} from "../../../../services/BrdGlb_BaseExporterService.ts";
 import {
     BrdGlb_HoleService
-} from "../../../services/BrdGlb_HoleService.ts";
+} from "../../../../services/BrdGlb_HoleService.ts";
 import {
     BrdGlb_ShapeService
-} from "../../../services/BrdGlb_ShapeService.ts";
+} from "../../../../services/BrdGlb_ShapeService.ts";
 import {
     BrdGlb_UVRemapperService
-} from "../../../services/BrdGlb_UVRemapperService.ts";
+} from "../../../../services/BrdGlb_UVRemapperService.ts";
+import {
+    BrdGlb_TC_SeD_SectionMaterials_Recordset
+} from "../../recordsets/BrdGlb_TC_SeD_SectionMaterials_Recordset.ts";
+import {
+    BrdGlb_TC_SeD_FP_FinishVariant_Recordset
+} from "../recordsets/BrdGlb_TC_SeD_FP_FinishVariant_Recordset.ts";
 
 // #endregion
 //-----------------------------------------------------------------------------
@@ -49,46 +61,41 @@ export const MODULE_NAME = "Brd3DvSectionsBuilder";
 
 
 /**
- * Costruttore del pannello coibentato della sezione del portone sezionale
+ * Gestore si pannelli coibentati per le sezioni del portone sezionale
  */
-export class BrdGlb_TC_SeD_FoamedPanelsService {
+export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
 
-    private _logger: Uts.BrdUts_Logger;
-
-
-
-    constructor(alogger: Uts.BrdUts_Logger) {
-
-        this._logger = alogger;
-
-    }
-
-
-
-    /**
-     * Costruisce la sezione del portone sezionale
-     */
-    build(
-        asection: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams
+    static #getMaterials(
+        aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams
     ) {
-        const start = performance.now();
 
-        const r = this.#buildSection(
-           asection
-        );
+        const intFinish = (aparams.intFinish) ?
+            aparams.intFinish : Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C21;
 
-        this._logger.log("Costruita sezione");
+        const r: BrdGlb_IIntExtMaterialDef = {
+            ext: BrdGlb_TC_SeD_SectionMaterials_Recordset[aparams.extFinish],
+            int: BrdGlb_TC_SeD_SectionMaterials_Recordset[intFinish]
+        }
+
+        r.ext.bumpMap = BrdGlb_TC_SeD_FP_FinishVariant_Recordset[aparams.variant]
+
+        const intVariant = Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.STUCCO;
+        r.int.bumpMap = BrdGlb_TC_SeD_FP_FinishVariant_Recordset[intVariant]
 
         return r;
     }
 
 
+    //--------------------------------------------------------------------------
+    // #region Shapes
 
     /**
      * Prepara le forme di estrusione per i pannelli schiumati del portone
      * sezionale
      */
-    #getFoamedPanelShapes(aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams) {
+    static #getFoamedPanelShapes(
+        aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams
+    ) {
 
         const outlines = Blm.TC.SeD.BrdBlm_TC_SeD_FoamedPanelsOutlines_Service.getOutlines(aparams);
 
@@ -102,70 +109,74 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
         return r;
     }
 
+    // #endregion
+    //--------------------------------------------------------------------------
 
 
     /**
      * Costruisce e posiziona il pannello coibentato del manto del portone sezionale
      */
-    #buildSection(
+    static Build(
         aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams,
     ) {
 
+        const materials = this.#getMaterials(aparams);
 
         const panelShapes = this.#getFoamedPanelShapes(aparams);
 
-        const r = this.#extrudeFoamedPanel(
-            aparams.length,
+        const name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.FOAMED_PANEL + "_" + aparams.sequence.toString();
+
+        const r = this.#extrudeFoamedPanelAlongZ(
+            name,
             panelShapes,
-            aparams.materials!,
-            aparams.inserts!
+            aparams.length,
+            this.LINEAR_EXTRUSION_STEP,
+            materials,
+            aparams.inserts!,
+            parseInt(BrdGlb_eLayer.PRODUCT_COAT)
         );
 
         const originX = -aparams.length / 2;
         const rotationY = Math.PI / 2; // 90°
 
         // Esterno
-        r.ext.position.set(originX, aparams.yDisplacement, 0);
+        r.ext.position.set(originX, aparams.displacement, 0);
         r.ext.rotation.y = rotationY;
-        BrdGlb_UVRemapperService.CubeMapping(r.ext);
-
-        r.ext.receiveShadow = true;
-        r.ext.castShadow = true;
-
-        r.ext.layers.set(BrdGlb_eLayer.PRODUCT_COAT);
-        r.ext.name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.SECTION_OUTSIDE;
-
 
         // Interno
-        r.int.position.set(originX, aparams.yDisplacement, 0);
+        r.int.position.set(originX, aparams.displacement, 0);
         r.int.rotation.y = rotationY;
-        BrdGlb_UVRemapperService.CubeMapping(r.int);
-
-        r.int.receiveShadow = true;
-        r.int.castShadow = true;
-
-        r.int.layers.set(BrdGlb_eLayer.PRODUCT_COAT);
-        r.int.name = Blm.TC.SeD.BrdBlm_TC_SeD_eSectionsPartNames.SECTION_INSIDE;
 
 
         return r;
     }
 
 
+    //--------------------------------------------------------------------------
+    // #region Extruders
 
-    #extrudeFoamedPanel(
-        alength: number,
+    static #extrudeFoamedPanelAlongZ(
+        aname: string,
         ashapes: BrdGlb_IIntExtShapes,
+        adepth: number,
+        astepLenght: number,
         amaterials: BrdGlb_IIntExtMaterialDef,
         ainserts: Blm.TC.BrdBlm_TC_IInsertParams[],
+        alayer: number,
     ) {
-        const extrusionOptions = {
-            depth: alength,
-            steps: 10,
+
+        const userData: BrdGlb_IUserData = {
+            signature: BrdGlb_IUserData_Signature,
+            layer: alayer
+        }
+
+        const extrusionOptions: THREE.ExtrudeGeometryOptions = {
+            depth: adepth,
             bevelEnabled: true,
             bevelThickness: 0.1,
             bevelSize: 0.4, //spessore lamiera
             bevelSegments: 1,
+            steps: Math.trunc(adepth / astepLenght) + 1,
         };
 
         const clonedMaterial = amaterials.ext.material!.clone();
@@ -194,7 +205,14 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
         }
 
         const extMesh = new THREE.Mesh(extGeometry, clonedMaterial);
+        extMesh.userData = userData;
+        extMesh.name = aname + "_Ext";
+        BrdGlb_UVRemapperService.CubeMapping(extMesh);
+
         const intMesh = new THREE.Mesh(intGeometry, amaterials.int.material);
+        intMesh.userData = userData;
+        intMesh.name = aname + "_Int";
+        BrdGlb_UVRemapperService.CubeMapping(intMesh);
 
         const r: BrdGlb_IIntExtMeshes = {
             ext: extMesh,
@@ -204,7 +222,8 @@ export class BrdGlb_TC_SeD_FoamedPanelsService {
     }
 
 
-
+    // #endregion
+    //--------------------------------------------------------------------------
 
 }
 
