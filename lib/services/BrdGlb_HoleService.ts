@@ -33,7 +33,7 @@ export class BrdGlb_HoleService {
   ) {
 
     const nr = Blm.TC.SeD.BrdBlm_TC_SeD_HolesOutlinesService.getOutlineByInsertCode(acode, aposition);
-    const holeOutline = nr.payload as Blm.BrdBlm_IPoint2D[];
+    const holeOutline = nr._payload as Blm.BrdBlm_IPoint2D[];
 
 
     const holePoints: THREE.Vector2[] = [];

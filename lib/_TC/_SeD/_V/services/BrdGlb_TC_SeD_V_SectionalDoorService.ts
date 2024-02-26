@@ -97,15 +97,15 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             holeLintel: aconfiguration.h,
             holeLintelAdditionalHeight: 0,
             holeLintelAdditionalDepth: 0,
-            leftEmbrasure: 350,
-            rightEmbrasure: 350,
-            rightWallProfile: [],
-            leftWallProfile: [],
+            embrasureLeft: 350,
+            embrasureRight: 350,
+            wallRightOutline: [],
+            wallLeftOutline: [],
             wallThickness: 300,
-            floorDepth: 4000,
+            roomDepth: 4000,
             floorThickness: 200,
             ceilingThickness: 250,
-            ceilingProfile: [],
+            ceilingOutline: [],
             columns: [],
             trasversalBeams:[]
         };
@@ -957,7 +957,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
 
         const start = performance.now();
 
-        const contextBuilder = new Blm.TC.Ctx.BrdBlm_TC_Ctx_Service(
+        const contextBuilder = new Blm.TC.Ctx.BrdGlb_TC_Ctx_Service(
             this.logger,
             this.maxAnisotropy
         );

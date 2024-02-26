@@ -72,7 +72,7 @@ export class BrdGlb_BaseExporterService {
     //--------------------------------------------------------------------------
     // #region Utilities
 
-    protected static mirrorPointsAgainstYAxis(
+    protected static $MirrorPointsAgainstYAxis(
         aprofile: Blm.BrdBlm_IPoint2D[]
     ) {
 
@@ -108,7 +108,7 @@ export class BrdGlb_BaseExporterService {
      * @returns un oggetto che contiene altri oggetti annidati fino alla mesh
      * originale pronto per essere aggiunto alla scena.
      */
-    protected static placeMeshWithOperations(
+    protected static $PlaceMeshWithOperations(
         amesh: THREE.Mesh,
         aplacementOp: Blm.BrdBlm_IPlacementOperation[],
         adoFlip: boolean
@@ -163,22 +163,22 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static placeCoupleWithOperations(
+    protected static $PlaceCoupleWithOperations(
         acouple: BrdGlb_IMeshCouple,
         operations: Blm.BrdBlm_IPlacementOperation[]
     ) {
         const r: THREE.Object3D[] = [];
 
-        r.push(this.placeMeshWithOperations(acouple.right, operations, false));
+        r.push(this.$PlaceMeshWithOperations(acouple.right, operations, false));
 
-        r.push(this.placeMeshWithOperations(acouple.left, operations, true));
+        r.push(this.$PlaceMeshWithOperations(acouple.left, operations, true));
 
         return r;
     }
 
 
 
-    protected static buildPlanesHelpers(
+    protected static $BuildPlanesHelpers(
         aname: string,
         asizeInMM = 10000,
         adivisions = 10
@@ -234,6 +234,15 @@ export class BrdGlb_BaseExporterService {
     }
 
 
+
+    protected static $GetRandomFromEnum<E>(aenum: any) {
+        const keys = Object.keys(aenum);
+        const index = Math.floor(Math.random() * keys.length);
+        const key = keys[index];
+        return aenum[key] as E;
+    }
+
+
     // #endregion
     //--------------------------------------------------------------------------
 
@@ -242,7 +251,7 @@ export class BrdGlb_BaseExporterService {
     // #region Extruders
 
 
-    protected static extrudeXYShapeAlongZ(
+    protected static $ExtrudeXYShapeAlongZ(
         ashape: THREE.Shape,
         adepth: number,
         astepLenght: number,
@@ -260,8 +269,10 @@ export class BrdGlb_BaseExporterService {
         );
 
         const r = new THREE.Mesh(geometry, amaterial);
+
         r.receiveShadow = true;
         r.castShadow = true;
+        
         BrdGlb_UVRemapperService.CubeMapping(r);
 
         return r;
@@ -270,15 +281,15 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static extrudeXYShapeAlongPath(
+    protected static $ExtrudeXYShapeAlongPath(
         ashape: THREE.Shape,
         apath: THREE.CatmullRomCurve3,
         asteps: number,
         amaterial: THREE.MeshStandardMaterial
     ) {
-        const star = this.getStarShapeForTest();
-        const path = this.randomExtrusionPathAlongZForTest();
-        const geometry1 = this.getRandomExtrudedGeometryAlongZForTest(star, path);
+        const star = this.$getStarShapeForTest();
+        const path = this.$randomExtrusionPathAlongZForTest();
+        const geometry1 = this.$getRandomExtrudedGeometryAlongZForTest(star, path);
         const r1 = new THREE.Mesh(geometry1, amaterial);
 
         const extrusionOptions: THREE.ExtrudeGeometryOptions = {
@@ -313,7 +324,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static getStarShapeForTest() {
+    protected static $getStarShapeForTest() {
         const pts = [];
         const numPts = 5;
 
@@ -329,7 +340,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static randomExtrusionPathAlongZForTest() {
+    protected static $randomExtrusionPathAlongZForTest() {
         const randomPoints = [];
 
         for (let i = 0; i < 10; i++) {
@@ -348,7 +359,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static getRandomExtrudedGeometryAlongZForTest(
+    protected static $getRandomExtrudedGeometryAlongZForTest(
         ashape: THREE.Shape,
         apath: THREE.CatmullRomCurve3
     ) {
@@ -371,7 +382,7 @@ export class BrdGlb_BaseExporterService {
     // #region Export
 
 
-    protected static buildStl(ascene: THREE.Scene) {
+    protected static $BuildStl(ascene: THREE.Scene) {
 
         const exporter = new THREE_STLExporter();
         const options = {
@@ -391,7 +402,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static async buildGltf(ascene: THREE.Scene) {
+    protected static async $BuildGltf(ascene: THREE.Scene) {
 
         const exporter = new THREE_GLTFExporter();
         const options = {
@@ -411,7 +422,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static async buildGlb(ascene: THREE.Scene) {
+    protected static async $BuildGlb(ascene: THREE.Scene) {
 
         const exporter = new THREE_GLTFExporter();
         const options = {
@@ -431,7 +442,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static async export(
+    protected static async $Export(
         aId: string,
         ascene: THREE.Scene,
         adoBinary = true
@@ -442,13 +453,13 @@ export class BrdGlb_BaseExporterService {
         const file = './srv/test/output/' + ascene.name + '_' + aId;
 
         if (!this.IS_DEPLOY) {
-            const stl = this.buildStl(ascene);
+            const stl = this.$BuildStl(ascene);
             Deno.writeTextFileSync(file + '.stl', stl);
         }
 
         if (adoBinary) {
 
-            const arrBuff = await this.buildGlb(ascene);
+            const arrBuff = await this.$BuildGlb(ascene);
             const uint8Arr = new Uint8Array(arrBuff);
 
             if (!this.IS_DEPLOY) {
@@ -459,7 +470,7 @@ export class BrdGlb_BaseExporterService {
         }
         else {
 
-            const gltf = await this.buildGltf(ascene);
+            const gltf = await this.$BuildGltf(ascene);
 
             if (!this.IS_DEPLOY) {
                 Deno.writeTextFileSync(file + '.gltf', gltf);

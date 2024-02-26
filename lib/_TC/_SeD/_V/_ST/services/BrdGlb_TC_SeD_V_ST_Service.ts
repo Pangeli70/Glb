@@ -105,7 +105,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
     ) {
 
         const points = Blm.TC.SeD.BrdBlm_TC_SeD_SlidingTracksOutlines_Service.Get(atype);
-        const mirroredPoints = this.mirrorPointsAgainstYAxis(points);
+        const mirroredPoints = this.$MirrorPointsAgainstYAxis(points);
         const r = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(mirroredPoints);
 
         return r;
@@ -135,7 +135,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
         const rightShape = this.#getShapeFromOutlineType(atype);
 
-        const rightMesh = this.extrudeXYShapeAlongZ(
+        const rightMesh = this.$ExtrudeXYShapeAlongZ(
             rightShape,
             alength,
             this.LINEAR_EXTRUSION_STEP,
@@ -143,10 +143,10 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         );
 
         rightMesh.userData = userData;
-        rightMesh.name = aname + "_Right";
+        rightMesh.name = "Right " + aname;
 
         const leftShape = this.#getMirroredShapeFromOutlineType(atype);
-        const leftMesh = this.extrudeXYShapeAlongZ(
+        const leftMesh = this.$ExtrudeXYShapeAlongZ(
             leftShape,
             alength,
             this.LINEAR_EXTRUSION_STEP,
@@ -154,7 +154,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         )
 
         leftMesh.userData = userData;
-        leftMesh.name = aname + "_Left"
+        leftMesh.name = "Left " + aname;
 
         const r: BrdGlb_IMeshCouple = {
             right: rightMesh,
@@ -182,7 +182,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         const pathSpline = new THREE.CatmullRomCurve3(apath);
 
         const rightShape = this.#getShapeFromOutlineType(atype);
-        const rightMesh = this.extrudeXYShapeAlongPath(
+        const rightMesh = this.$ExtrudeXYShapeAlongPath(
             rightShape,
             pathSpline,
             (apath.length + 4) * 2,
@@ -192,7 +192,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         rightMesh.name = aname + "_Right";
 
         const leftShape = this.#getMirroredShapeFromOutlineType(atype);
-        const leftMesh = this.extrudeXYShapeAlongPath(
+        const leftMesh = this.$ExtrudeXYShapeAlongPath(
             leftShape,
             pathSpline,
             (apath.length + 4) * 2,
@@ -238,7 +238,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             alayer
         );
 
-        r = this.placeCoupleWithOperations(couple, stretch.placement);
+        r = this.$PlaceCoupleWithOperations(couple, stretch.placement);
 
         return r;
 
@@ -279,7 +279,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             alayer
         )
 
-        r = this.placeCoupleWithOperations(
+        r = this.$PlaceCoupleWithOperations(
             meshes,
             curve.placement,
         );
@@ -453,62 +453,62 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         r.rotation.y = this.RAD_180;
         r.name = aparams.name;
 
-        const data = Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_Service.GetComponents(aparams);
-        if (!data) return r;
+        const components = Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_Service.GetComponents(aparams);
+        if (!components) return r;
 
         // Angolare verticale primo tratto
-        const angleBarsFirstStretch = this.#buildAngleBarsFirstStretch(data);
+        const angleBarsFirstStretch = this.#buildAngleBarsFirstStretch(components);
         r.add(angleBarsFirstStretch[0]);
         r.add(angleBarsFirstStretch[1]);
 
         // Guida verticale primo tratto
-        const verticalTracksFirstStretch = this.#buildVerticalTracksFirstStretch(data);
+        const verticalTracksFirstStretch = this.#buildVerticalTracksFirstStretch(components);
         r.add(verticalTracksFirstStretch[0]);
         r.add(verticalTracksFirstStretch[1]);
 
         // Angolare verticale secondo tratto solo per S3, S4 ecc.
-        const angleBarsSecondStretch = this.#buildAngleBarsSecondStretch(data);
+        const angleBarsSecondStretch = this.#buildAngleBarsSecondStretch(components);
         if (angleBarsSecondStretch.length == 2) {
             // r.add(angleBarsSecondStretch[0]);
             // r.add(angleBarsSecondStretch[1]);
         }
 
         // Guida verticale secondo tratto, solo per S3, S4 ecc.
-        const verticalTracksSecondStretch = this.#buildVerticalTracksSecondStretch(data);
+        const verticalTracksSecondStretch = this.#buildVerticalTracksSecondStretch(components);
         if (verticalTracksSecondStretch.length == 2) {
             // r.add(verticalTracksSecondStretch[0]);
             // r.add(verticalTracksSecondStretch[1]);
         }
 
         // Curva tranne che per S4, S4R
-        const curves = this.#buildRegularCurve(data);
+        const curves = this.#buildRegularCurve(components);
         if (curves.length == 2) {
             r.add(curves[0]);
             r.add(curves[1]);
         }
 
         // Profilo a C solo se non è STO, SMB3
-        const horizontalCProfiles = this.#buildHorizontalCProfiles(data);
+        const horizontalCProfiles = this.#buildHorizontalCProfiles(components);
         if (horizontalCProfiles.length == 2) {
             r.add(horizontalCProfiles[0]);
             r.add(horizontalCProfiles[1]);
         }
 
         // Guida orizzontale inferiore solo se non è S4
-        const lowerHorizontalTracks = this.#buildLowerHorizontalTracks(data);
+        const lowerHorizontalTracks = this.#buildLowerHorizontalTracks(components);
         if (lowerHorizontalTracks.length == 2) {
             r.add(lowerHorizontalTracks[0]);
             r.add(lowerHorizontalTracks[1]);
         }
 
         // Guida orizzontale superiore solo se è STO, SR o S1
-        const upperHorizontalTracks = this.#buildUpperHorizontalTracks(data);
+        const upperHorizontalTracks = this.#buildUpperHorizontalTracks(components);
         if (upperHorizontalTracks.length == 2) {
             r.add(upperHorizontalTracks[0]);
             r.add(upperHorizontalTracks[1]);
         }
 
-        const helpers = this.buildPlanesHelpers(aparams.name);
+        const helpers = this.$BuildPlanesHelpers(aparams.name);
         r.add(helpers);
 
         return r;
@@ -521,7 +521,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         ascene: THREE.Scene,
         adoBinary = true
     ) {
-        return await super.export(aid, ascene, adoBinary);
+        return await super.$Export(aid, ascene, adoBinary);
     }
 
     // #endregion
