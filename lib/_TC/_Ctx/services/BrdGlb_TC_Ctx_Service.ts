@@ -12,7 +12,6 @@
 import {
     Uts,
     Blm,
-    Brd3Dv_AssetsServer,
     THREE
 } from "../../../deps.ts";
 import {
@@ -50,55 +49,13 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
     static #getMaterialFromDef(
         adef: Blm.BrdBlm_IMaterialDef,
-        atextureLoader: THREE.TextureLoader,
-        abaseUrl: string
     ) {
 
         const r = new THREE.MeshStandardMaterial({
             color: adef.color,
             roughness: adef.roughness,
+            userData:  adef
         });
-
-        let rotation = -1;
-
-        if (adef.texture && adef.texture.texture) {
-            const textureFile = abaseUrl + adef.texture.url + adef.texture.texture;
-            const texture = atextureLoader.load(textureFile);
-            texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;
-            texture.repeat.set(adef.texture.uScale, adef.texture.vScale);
-            texture.colorSpace = THREE.SRGBColorSpace;
-            if (adef.texture.canRotate) {
-                rotation = 45 * Math.random() * Uts.BrdUts.TO_RAD;
-                texture.rotation = rotation;
-            }
-            r.map = texture;
-        }
-
-        if (adef.bumpMap && adef.bumpMap.bumpMap) {
-            const bumpMapFile = abaseUrl + adef.bumpMap.url + adef.bumpMap.bumpMap;
-            const bumpMap = atextureLoader.load(bumpMapFile);
-            bumpMap.wrapS = THREE.RepeatWrapping;
-            bumpMap.wrapT = THREE.RepeatWrapping;
-            bumpMap.repeat.set(adef.bumpMap.uScale, adef.bumpMap.vScale);
-            bumpMap.colorSpace = THREE.SRGBColorSpace;
-            if (adef.bumpMap.canRotate) {
-                if (rotation == -1) {
-                    rotation = 45 * Math.random() * Uts.BrdUts.TO_RAD;
-                    bumpMap.rotation = rotation
-                }
-            }
-            r.bumpMap = bumpMap;
-            r.bumpScale = adef.bumpMap.depth;
-
-        }
-
-        if (adef.trasparency) {
-            r.transparent = true;
-            r.opacity = adef.trasparency;
-        }
-
-        r.userData = adef;
 
         return r;
     }
@@ -134,33 +91,29 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_BEAM]: null,
         };
 
-        const baseUrl = Brd3Dv_AssetsServer
-
-        const textureLoader = new THREE.TextureLoader();
-
 
         const facadeDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE];
         if (facadeDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE] =
-                this.#getMaterialFromDef(facadeDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(facadeDef);
         }
 
         const pavementDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_PAVEMENT];
         if (pavementDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_PAVEMENT] =
-                this.#getMaterialFromDef(pavementDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(pavementDef);
         }
 
         const thresholdDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_THRESHOLD];
         if (thresholdDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_THRESHOLD] =
-                this.#getMaterialFromDef(thresholdDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(thresholdDef);
         }
 
         const extBaseboardDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_BASEBOARD];
         if (extBaseboardDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_BASEBOARD] =
-                this.#getMaterialFromDef(extBaseboardDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(extBaseboardDef);
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_RIGHT_BASEBOARD] =
                 r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_BASEBOARD];
         }
@@ -168,7 +121,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
         const wallsDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
         if (wallsDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL] =
-                this.#getMaterialFromDef(wallsDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(wallsDef);
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL] =
                 r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
         }
@@ -176,13 +129,13 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
         const floorDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR];
         if (floorDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR] =
-                this.#getMaterialFromDef(floorDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(floorDef);
         }
 
         const ceilingDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_CEILING];
         if (ceilingDef) {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_CEILING] =
-                this.#getMaterialFromDef(ceilingDef, textureLoader, baseUrl);
+                this.#getMaterialFromDef(ceilingDef);
         }
 
         return r;
