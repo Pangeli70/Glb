@@ -6,7 +6,12 @@
  */
 
 
-import { BrdGlb_eLayer } from "../enums/BrdGlb_eLayer.ts";
+import {
+    BrdGlb_eLayer
+} from "../enums/BrdGlb_eLayer.ts";
+import {
+    BrdGlb_IBaseModel
+} from "./BrdGlb_IBaseModel.ts";
 import {
     BrdGlb_IPoint3D
 } from "./BrdGlb_IPoint3D.ts";
@@ -18,7 +23,7 @@ export const BrdGlb_IDynamicModel_Signature = "BrdGlb_IDynamicModel_Signature_V1
 /**
  * Modello dinamico creato o servito da qualche microservizio
  */
-export interface BrdGlb_IDynamicModel {
+export interface BrdGlb_IDynamicModel extends BrdGlb_IBaseModel {
 
     /**
      * Firma del record
@@ -31,14 +36,9 @@ export interface BrdGlb_IDynamicModel {
     name: string
 
     /**
-     * Route dell'Url del server dove richiedere questo asset dinamico con una chiamata in post
+     * URL finale restituito dalla chiamata in post per scaricare il file GLTF/GLB
      */
-    restRoute: string,
-
-    /**
-     * Parametri di configurazione dal passare nel body della chiamata in post
-     */
-    params: any,
+    url: string;
 
     /**
      * Posizionamento dell'asset nella scena
@@ -46,14 +46,19 @@ export interface BrdGlb_IDynamicModel {
     position: BrdGlb_IPoint3D,
 
     /**
+     * Aggiustamento della scala dell'asset
+     */
+    scale?: number;
+
+    /**
+     * Rotazione dell'asset sull'asse Y
+     */
+    rotationInDeg?: number; // @2
+
+    /**
      * Layer sul quale sarà aggiunto il modello dinamico
      */
     layer: BrdGlb_eLayer,
-
-    /**
-     * URL finale restituito dalla chiamata in post per scaricare il file GLTF/GLB
-     */
-    fullUrl?: string;
 
     /**
      * Reference frame del modello dinamico caricato nella scena
@@ -69,6 +74,18 @@ export interface BrdGlb_IDynamicModel {
      * Il modello è visualizzato
      */
     enabled?: boolean
+
+    /**
+     * Route dell'Url del server dove richiedere questo asset dinamico con una chiamata in post
+     */
+    postUrl: string,
+
+    /**
+     * Parametri di configurazione dal passare nel body della chiamata in post
+     */
+    postParams: any,
+
+
 }
 
 

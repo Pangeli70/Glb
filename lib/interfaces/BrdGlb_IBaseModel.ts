@@ -10,25 +10,17 @@ import {
     BrdGlb_eLayer
 } from "../enums/BrdGlb_eLayer.ts";
 import {
-    BrdGlb_IBaseModel
-} from "./BrdGlb_IBaseModel.ts";
-import {
     BrdGlb_IPoint3D
 } from "./BrdGlb_IPoint3D.ts";
 
 
-export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel_Signature_V2";
-
 
 /**
- * Modello statico creato o servito da qualche CDN
+ * Modello base che viene scaricato come GLB o GLTF
  */
-export interface BrdGlb_IStaticModel extends BrdGlb_IBaseModel{
+export interface BrdGlb_IBaseModel {
 
-    /**
-     * Firma del record
-     */
-    readonly signature: "BrdGlb_IStaticModel_Signature_V2",
+
 
     /**
      * Nome del tipo di asset statico
@@ -48,15 +40,15 @@ export interface BrdGlb_IStaticModel extends BrdGlb_IBaseModel{
     /**
      * Aggiustamento della scala dell'asset
      */
-    scale: number;
+    scale?: number;
 
     /**
      * Rotazione dell'asset sull'asse Y
      */
-    rotationInDeg: number; // @2
+    rotationInDeg?: number; // @2
 
     /**
-     * Layer sul quale sarà aggiunto il modello statico
+     * Layer sul quale sarà aggiunto il modello
      */
     layer: BrdGlb_eLayer,
 

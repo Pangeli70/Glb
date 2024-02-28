@@ -10,6 +10,7 @@
 
 export * from "./enums/BrdGlb_eLayer.ts"
 
+export * from "./interfaces/BrdGlb_IBaseModel.ts"
 export * from "./interfaces/BrdGlb_IBumpMapDef.ts"
 export * from "./interfaces/BrdGlb_IDynamicModel.ts"
 export * from "./interfaces/BrdGlb_IIntExtGeometries.ts"
