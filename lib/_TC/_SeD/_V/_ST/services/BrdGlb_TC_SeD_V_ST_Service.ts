@@ -238,7 +238,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
             alayer
         );
 
-        r = this.$PlaceCoupleWithOperations(couple, stretch.placement);
+        r = this.$PlaceCoupleWithOperations(couple, stretch.placementOps);
 
         return r;
 
@@ -281,7 +281,7 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
 
         r = this.$PlaceCoupleWithOperations(
             meshes,
-            curve.placement,
+            curve.placementOps,
         );
 
         return r;

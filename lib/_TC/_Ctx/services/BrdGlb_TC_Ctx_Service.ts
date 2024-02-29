@@ -81,6 +81,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_ROOF]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_LAMP]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_RIGHT_LAMP]: null,
+            [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_CEILING]: null,
@@ -123,6 +124,8 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL] =
                 this.#getMaterialFromDef(wallsDef);
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL] =
+                r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
+            r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE] =
                 r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
         }
 
@@ -174,7 +177,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
         mesh.name = acomponent.name;
         mesh.userData = userData;
 
-        const r = this.$PlaceMeshWithOperations(mesh, acomponent.placement, false)
+        const r = this.$PlaceMeshWithOperations(mesh, acomponent.placementOps, false)
 
         return r;
     }
@@ -204,11 +207,11 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         let layer = parseInt(BrdGlb_eLayer.CONTEXT_OUTSIDE);
 
-        const facadeComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE];
-        if (facadeComponent) {
+        const extFacadeComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE];
+        if (extFacadeComponent) {
             const object = this.#buildComponent(
                 layer,
-                facadeComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
+                extFacadeComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE]
             )
             r.add(object);
@@ -255,6 +258,16 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
         }
 
         layer = parseInt(BrdGlb_eLayer.CONTEXT_INSIDE);
+
+        const intFacadeComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE];
+        if (intFacadeComponent) {
+            const object = this.#buildComponent(
+                layer,
+                intFacadeComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
+                materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE]
+            )
+            r.add(object);
+        }
 
         const floorComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR];
         if (floorComponent) {
