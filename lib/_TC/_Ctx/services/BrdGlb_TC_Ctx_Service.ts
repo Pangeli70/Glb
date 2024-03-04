@@ -54,12 +54,11 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
         const r = new THREE.MeshStandardMaterial({
             color: adef.color,
             roughness: adef.roughness,
-            userData:  adef
         });
-
+        r.side = THREE.DoubleSide;
+        r.userData = adef;
         return r;
     }
-
 
 
 
@@ -81,9 +80,11 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_ROOF]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_LAMP]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_RIGHT_LAMP]: null,
+
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL]: null,
+            [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_BACK_WALL]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_CEILING]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_BASEBOARD]: null,
@@ -127,6 +128,8 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
                 r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
             r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE] =
                 r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
+            r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_BACK_WALL] =
+                r[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
         }
 
         const floorDef = acontext.materialDefs![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR];
@@ -147,8 +150,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
 
 
-
-    static #buildComponent(
+    static #buildExtrudedComponent(
         alayer: number,
         acomponent: Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
         amaterial: THREE.MeshStandardMaterial | null
@@ -184,6 +186,40 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
 
 
+    static #buildPlaneComponent(
+        alayer: number,
+        acomponent: Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
+        amaterial: THREE.MeshStandardMaterial | null
+    ) {
+
+        const userData: BrdGlb_IUserData = {
+            signature: BrdGlb_IUserData_Signature,
+            layer: alayer
+        }
+
+        const shape = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(
+            acomponent.outline
+        );
+
+        if (amaterial == null) {
+            amaterial = new THREE.MeshStandardMaterial({ color: 0xff00ff, })
+        }
+        else {
+            amaterial = amaterial.clone();
+        }
+        amaterial.side = THREE.FrontSide;
+
+        const geometry = new THREE.ShapeGeometry(shape);
+        const mesh = new THREE.Mesh(geometry, amaterial);
+        mesh.name = acomponent.name;
+        mesh.userData = userData;
+
+        const r = this.$PlaceMeshWithOperations(mesh, acomponent.placementOps, false)
+
+        return r;
+    }
+
+
 
     //--------------------------------------------------------------------------
     // #region Scene
@@ -197,6 +233,10 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const r = new THREE.Scene();
 
+        r.scale.x = 0.001;
+        r.scale.y = 0.001;
+        r.scale.z = 0.001;
+
         r.name = aparams.name;
 
         const context = new Blm.TC.Ctx.BrdBlm_TC_Ctx(aparams);
@@ -209,7 +249,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const extFacadeComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE];
         if (extFacadeComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 extFacadeComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FACADE]
@@ -219,7 +259,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const pavementComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_PAVEMENT];
         if (pavementComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 pavementComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_PAVEMENT]
@@ -229,7 +269,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const thresholdComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_THRESHOLD];
         if (thresholdComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 thresholdComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_THRESHOLD]
@@ -239,7 +279,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const extLeftBaseboardComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_BASEBOARD];
         if (extLeftBaseboardComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 extLeftBaseboardComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_BASEBOARD]
@@ -249,7 +289,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const extRightBaseboardComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_RIGHT_BASEBOARD];
         if (extRightBaseboardComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 extRightBaseboardComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_RIGHT_BASEBOARD]
@@ -261,7 +301,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const intFacadeComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE];
         if (intFacadeComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 intFacadeComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE]
@@ -271,7 +311,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const floorComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR];
         if (floorComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 floorComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FLOOR]
@@ -281,7 +321,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const ceilingComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_CEILING];
         if (ceilingComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 ceilingComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_CEILING]
@@ -291,7 +331,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const leftWallComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL];
         if (leftWallComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 leftWallComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_LEFT_WALL]
@@ -301,10 +341,20 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         const rightWallComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL];
         if (rightWallComponent) {
-            const object = this.#buildComponent(
+            const object = this.#buildExtrudedComponent(
                 layer,
                 rightWallComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
                 materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL]
+            )
+            r.add(object);
+        }
+
+        const backWallComponent = context.components![Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_BACK_WALL];
+        if (backWallComponent) {
+            const object = this.#buildPlaneComponent(
+                layer,
+                backWallComponent as Blm.TC.Ctx.BrdBlm_TC_Ctx_Component,
+                materials[Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_BACK_WALL]
             )
             r.add(object);
         }

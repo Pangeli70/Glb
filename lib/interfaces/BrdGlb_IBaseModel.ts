@@ -5,7 +5,9 @@
  * @version 0.1 APG 20240222 Rotazione
  * ----------------------------------------------------------------------------
  */
-
+import {
+    THREE
+} from "../deps.ts";
 import {
     BrdGlb_eLayer
 } from "../enums/BrdGlb_eLayer.ts";
@@ -55,7 +57,7 @@ export interface BrdGlb_IBaseModel {
     /**
      * Reference frame del modello statico caricato nella scena
      */
-    model?: THREE.Object3D,
+    model?: THREE.Object3D | THREE.Group,
 
     /**
      * Il modello è stato caricato

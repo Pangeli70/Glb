@@ -15,14 +15,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-    THREE,
-    GLTFLoader,
-    STLLoader
-} from "../../../../../../V3d/lib/Brd3Dv_Deps.ts";
-import {
-    BrdGlb_eLayers
-} from "../../../../enums/BrdGlb_eLayers.ts";
+
 import {
     BrdBlm_TC_SeD_V_IDoorParams
 } from "../../../../../../Blm/lib/_TC/_SeD/_V/interfaces/BrdBlm_TC_SeD_V_IDoorParams.ts";

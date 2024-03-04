@@ -21,6 +21,7 @@ export enum BrdGlb_eLayer {
     HELPERS = "4",
     PROBES = "5",
     EDGES = "6",
+    LIGHT = "7",
 
     PRODUCT_ADAPTERS = "10",
     PRODUCT_SLIDING = "11",

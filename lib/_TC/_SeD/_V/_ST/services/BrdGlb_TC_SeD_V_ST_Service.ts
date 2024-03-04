@@ -449,6 +449,9 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
     ) {
 
         const r = new THREE.Scene();
+        r.scale.x = 0.001;
+        r.scale.y = 0.001;
+        r.scale.z = 0.001;
 
         r.rotation.y = this.RAD_180;
         r.name = aparams.name;

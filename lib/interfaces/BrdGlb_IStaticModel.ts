@@ -7,6 +7,9 @@
  */
 
 import {
+    THREE
+} from "../deps.ts";
+import {
     BrdGlb_eLayer
 } from "../enums/BrdGlb_eLayer.ts";
 import {
@@ -63,7 +66,7 @@ export interface BrdGlb_IStaticModel extends BrdGlb_IBaseModel{
     /**
      * Reference frame del modello statico caricato nella scena
      */
-    model?: THREE.Object3D,
+    model?: THREE.Object3D | THREE.Group,
 
     /**
      * Il modello è stato caricato
