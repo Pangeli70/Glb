@@ -224,15 +224,17 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
     //--------------------------------------------------------------------------
     // #region Scene
 
-    static Build(
+    static BuildScene(
         alogger: Uts.BrdUts_Logger,
         aparams: Blm.TC.Ctx.BrdBlm_TC_Ctx_IParams,
     ) {
 
-        alogger.begin(MODULE_NAME, this.Build.name);
+        alogger.begin(MODULE_NAME, this.BuildScene.name);
 
         const r = new THREE.Scene();
 
+        // NOTE Il visualizzatore utilizza come unità di misura i metri mentre
+        // la business logic utilizza i millimetri --APG 20240303
         r.scale.x = 0.001;
         r.scale.y = 0.001;
         r.scale.z = 0.001;
@@ -360,22 +362,10 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
         }
 
 
-        alogger.end('Context building completed');
+        alogger.end('Building of context for technical closure is completed');
 
         return r;
 
-    }
-
-
-
-
-
-    static async Export(
-        aid: string,
-        ascene: THREE.Scene,
-        adoBinary = true
-    ) {
-        return await super.$Export(aid, ascene, adoBinary);
     }
 
     // #endregion

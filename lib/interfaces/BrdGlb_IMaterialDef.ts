@@ -40,7 +40,7 @@ export interface BrdGlb_IMaterialDef {
   roughness: Blm.BrdBlm_eGlossRoughness;
 
   /**
-   * Se il materiale ha una immagine ripetibile
+   * Se il materiale ha una texture di immagine ripetibile
    */
   texture?: BrdGlb_ITextureDef;
 
@@ -50,9 +50,21 @@ export interface BrdGlb_IMaterialDef {
   bumpMap?: BrdGlb_IBumpMapDef;
 
   /**
+   * spostamento di mappatura orizzontale
+   */
+  uDisplacement?: number;
+
+  /**
+   * spostamento di mappatura verticale
+   */
+  vDisplacement?: number;
+
+  /**
    * Materiale da usare per le mesh
    */
   material?: THREE.MeshStandardMaterial
+
+
 
 }
 

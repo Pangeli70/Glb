@@ -12,7 +12,8 @@
 
 import {
     Blm,
-    THREE
+    THREE,
+    Uts
 } from "../../../../deps.ts";
 import {
     BrdGlb_eLayer
@@ -116,8 +117,38 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
     /**
      * Costruisce e posiziona il pannello coibentato del manto del portone sezionale
      */
-    static Build(
+    static BuildScene(
+        alogger: Uts.BrdUts_Logger,
         aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams,
+    ) {
+
+
+        alogger.begin(MODULE_NAME, this.BuildScene.name);
+
+        const r = new THREE.Scene();
+
+        // NOTE Il visualizzatore utilizza come unità di misura i metri mentre
+        // la business logic utilizza i millimetri --APG 20240303
+        r.scale.x = 0.001;
+        r.scale.y = 0.001;
+        r.scale.z = 0.001;
+
+        r.name = aparams.name;
+
+        const panel = BrdGlb_TC_SeD_FP_Service.#BuildPanel(aparams);
+
+        r.add(panel.int);
+        r.add(panel.ext);
+
+        alogger.end('Building of sliding tracks for vertical sectional door is completed');
+
+        return r;
+    }
+
+
+
+    static #BuildPanel(
+        aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams
     ) {
 
         const materials = this.#getMaterials(aparams);
@@ -139,6 +170,7 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
         const originX = -aparams.length / 2;
         const rotationY = Math.PI / 2; // 90°
 
+
         // Esterno
         r.ext.position.set(originX, aparams.displacement, 0);
         r.ext.rotation.y = rotationY;
@@ -147,8 +179,8 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
         r.int.position.set(originX, aparams.displacement, 0);
         r.int.rotation.y = rotationY;
 
-
         return r;
+
     }
 
 
@@ -160,7 +192,7 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
         ashapes: BrdGlb_IIntExtShapes,
         adepth: number,
         astepLenght: number,
-        amaterials: BrdGlb_IIntExtMaterialDef,
+        amaterialsDefs: BrdGlb_IIntExtMaterialDef,
         ainserts: Blm.TC.BrdBlm_TC_IInsertParams[],
         alayer: number,
     ) {
@@ -179,13 +211,26 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
             steps: Math.trunc(adepth / astepLenght) + 1,
         };
 
-        const clonedMaterial = amaterials.ext.material!.clone();
+        const extClonedMaterial = (amaterialsDefs.ext.material) ?
+            amaterialsDefs.ext.material.clone() :
+            new THREE.MeshStandardMaterial({
+                color: amaterialsDefs.ext.color
+            })
+
+        const intClonedMaterial = (amaterialsDefs.int.material) ?
+            amaterialsDefs.int.material.clone() :
+            new THREE.MeshStandardMaterial({
+                color: amaterialsDefs.int.color
+            })
+
         // Pannello con texture
-        if (clonedMaterial.map) {
-            const clonedTexture = clonedMaterial.map.clone();
+        // TODO spostare tutto nella material Def in modo che sia il viewer ad 
+        // applicare le texture  nel modo corretto -- APG 20240306
+        if (extClonedMaterial.map) {
+            const clonedTexture = extClonedMaterial.map.clone();
             // Sposta la texture in orizzontale per mescolare le ripetizioni in verticale
             clonedTexture.offset = new THREE.Vector2(Math.random(), 0);
-            clonedMaterial.map = clonedTexture;
+            extClonedMaterial.map = clonedTexture;
         }
 
         let extGeometry = new THREE.ExtrudeGeometry(ashapes.ext, extrusionOptions);
@@ -204,15 +249,15 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
             intGeometry = machinedGeometries.int;
         }
 
-        const extMesh = new THREE.Mesh(extGeometry, clonedMaterial);
-        extMesh.userData = userData;
-        extMesh.name = aname + "_Ext";
+        const extMesh = new THREE.Mesh(extGeometry, extClonedMaterial);
         BrdGlb_UVRemapperService.CubeMapping(extMesh);
+        extMesh.name = aname + "_Ext";
+        extMesh.userData = userData;
 
-        const intMesh = new THREE.Mesh(intGeometry, amaterials.int.material);
-        intMesh.userData = userData;
-        intMesh.name = aname + "_Int";
+        const intMesh = new THREE.Mesh(intGeometry, intClonedMaterial);
         BrdGlb_UVRemapperService.CubeMapping(intMesh);
+        intMesh.name = aname + "_Int";
+        intMesh.userData = userData;
 
         const r: BrdGlb_IIntExtMeshes = {
             ext: extMesh,

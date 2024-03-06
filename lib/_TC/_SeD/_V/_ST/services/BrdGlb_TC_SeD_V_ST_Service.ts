@@ -10,6 +10,7 @@
 import {
     Blm,
     THREE,
+    Uts,
 } from "../../../../../deps.ts";
 import {
     BrdGlb_eLayer
@@ -32,6 +33,7 @@ import {
 } from "../../../types/BrdGlb_TC_SeD_TSlidingTracksMaterials_Recordset.ts";
 
 
+const MODULE_NAME = "BrdGlb_TC_SeD_V_ST_Service";
 
 /**
  * Gestore delle guide di scorrimento per i portoni sezionali verticali
@@ -444,16 +446,26 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
     //--------------------------------------------------------------------------
     // #region Scene
 
-    static Build(
+    static BuildScene(
+        alogger: Uts.BrdUts_Logger,
         aparams: Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_IParams
     ) {
 
+        alogger.begin(MODULE_NAME, this.BuildScene.name);
+
         const r = new THREE.Scene();
+
+        // NOTE Il visualizzatore utilizza come unità di misura i metri mentre
+        // la business logic utilizza i millimetri --APG 20240303
         r.scale.x = 0.001;
         r.scale.y = 0.001;
         r.scale.z = 0.001;
 
+        // NOTE la costruzione delle guide viene fatta per estrusione verso Z positivo
+        // Quindi sarebbero per una vista interna. Per posizionarle nel contesto che
+        // è vista esterna bisogna girare tutto di 180° --APG 20240303
         r.rotation.y = this.RAD_180;
+        
         r.name = aparams.name;
 
         const components = Blm.TC.SeD.V.ST.BrdBlm_TC_SeD_V_ST_Service.GetComponents(aparams);
@@ -514,18 +526,12 @@ export class BrdGlb_TC_SeD_V_ST_Service extends BrdGlb_BaseExporterService {
         const helpers = this.$BuildPlanesHelpers(aparams.name);
         r.add(helpers);
 
+        alogger.end('Building of sliding tracks for vertical sectional door is completed');
+
         return r;
     }
 
 
-
-    static async Export(
-        aid: string,
-        ascene: THREE.Scene,
-        adoBinary = true
-    ) {
-        return await super.$Export(aid, ascene, adoBinary);
-    }
 
     // #endregion
     //--------------------------------------------------------------------------

@@ -8,19 +8,22 @@
  */
 
 
-import * as Blm from "../../../../../../Blm/modForGlb.ts"
+
 import {
-  BrdGlb_IBumpMapDef
+    Blm
+} from "../../../../deps.ts";
+import {
+    BrdGlb_IBumpMapDef
 } from "../../../../interfaces/BrdGlb_IBumpMapDef.ts";
 
 
 
 
-const variant = Blm.BrdBlm_TC_SeD_eFinishVariant;
+const variant = Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant;
 
 type BrdGlb_TC_SeD_FP_TFinishVariant_Recordset = Record<
-  Blm.BrdBlm_TC_SeD_eFinishVariant,
-  BrdGlb_IBumpMapDef
+    Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant,
+    BrdGlb_IBumpMapDef
 >;
 
 
@@ -30,41 +33,41 @@ type BrdGlb_TC_SeD_FP_TFinishVariant_Recordset = Record<
  * Gestione delle goffrature per le varianti finitura pannelli schiumati
  */
 export const BrdGlb_TC_SeD_FP_FinishVariant_Recordset: BrdGlb_TC_SeD_FP_TFinishVariant_Recordset = {
-  
-  [variant.STUCCO]: {
-    bumpMap: "Brd3DvStucco_BumpMap_256.jpg",
-    depth: 10,
-    uScale: 1000 / 125,
-    vScale: 1000 / 125,
-  },
-  
-  [variant.WOOD_GRAIN]: {
-    bumpMap: "Brd3DvWoodGrain_BumpMap_256.jpg",
-    depth: 10,
-    uScale: 1000 / 125,
-    vScale: 1000 / 125,
-  },
-  
-  [variant.SMOOTH]: {
-    bumpMap: "",
-    depth: 0,
-    uScale: 1,
-    vScale: 1,
-  },
-  
-  [variant.ULTRA_TOUCH]: {
-    bumpMap: "",
-    depth: 0,
-    uScale: 1,
-    vScale: 1,
-  },
-  
-  [variant.MULTIRIB]: {
-    bumpMap: "Brd3DvMultirib_BumpMap_64.jpg",
-    depth: 10,
-    uScale: 1000 / 125,
-    vScale: 1000 / 64,
-  },
+
+    [variant.STUCCO]: {
+        bumpMap: "Brd3DvStucco_BumpMap_256.jpg",
+        depth: 10,
+        uScale: 1000 / 125,
+        vScale: 1000 / 125,
+    },
+
+    [variant.WOOD_GRAIN]: {
+        bumpMap: "Brd3DvWoodGrain_BumpMap_256.jpg",
+        depth: 10,
+        uScale: 1000 / 125,
+        vScale: 1000 / 125,
+    },
+
+    [variant.SMOOTH]: {
+        bumpMap: "",
+        depth: 0,
+        uScale: 1,
+        vScale: 1,
+    },
+
+    [variant.ULTRA_TOUCH]: {
+        bumpMap: "",
+        depth: 0,
+        uScale: 1,
+        vScale: 1,
+    },
+
+    [variant.MULTIRIB]: {
+        bumpMap: "Brd3DvMultirib_BumpMap_64.jpg",
+        depth: 10,
+        uScale: 1000 / 125,
+        vScale: 1000 / 64,
+    },
 };
 
 /*! ---------------------------------------------------------------------------

@@ -6,11 +6,13 @@
  * ----------------------------------------------------------------------------
  */
 
+
 import {
     Blm,
     THREE,
     THREE_GLTFExporter,
-    THREE_STLExporter
+    THREE_STLExporter,
+    Uts
 } from "../deps.ts";
 import {
     BrdGlb_eLayer
@@ -27,6 +29,7 @@ import {
 } from "./BrdGlb_UVRemapperService.ts";
 
 
+const MODULE_NAME = "BrdGlb_BaseExporterService";
 
 /**
  * Servizio di base per gestire l'esportazione delle scene costruite server side
@@ -68,6 +71,7 @@ export class BrdGlb_BaseExporterService {
             Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
         return r;
     }
+
 
     //--------------------------------------------------------------------------
     // #region Utilities
@@ -190,7 +194,7 @@ export class BrdGlb_BaseExporterService {
             signature: BrdGlb_IUserData_Signature,
             layer: parseInt(BrdGlb_eLayer.HELPERS)
         }
-        
+
         const r = new THREE.Object3D();
         r.name = name;
         r.userData = userData;
@@ -272,7 +276,7 @@ export class BrdGlb_BaseExporterService {
 
         r.receiveShadow = true;
         r.castShadow = true;
-        
+
         BrdGlb_UVRemapperService.CubeMapping(r);
 
         return r;
@@ -287,9 +291,9 @@ export class BrdGlb_BaseExporterService {
         asteps: number,
         amaterial: THREE.MeshStandardMaterial
     ) {
-        const star = this.$getStarShapeForTest();
-        const path = this.$randomExtrusionPathAlongZForTest();
-        const geometry1 = this.$getRandomExtrudedGeometryAlongZForTest(star, path);
+        const star = this.$GetStarShapeForTest();
+        const path = this.$RandomExtrusionPathAlongZForTest();
+        const geometry1 = this.$GetRandomExtrudedGeometryAlongZForTest(star, path);
         const r1 = new THREE.Mesh(geometry1, amaterial);
 
         const extrusionOptions: THREE.ExtrudeGeometryOptions = {
@@ -324,7 +328,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static $getStarShapeForTest() {
+    protected static $GetStarShapeForTest() {
         const pts = [];
         const numPts = 5;
 
@@ -340,7 +344,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static $randomExtrusionPathAlongZForTest() {
+    protected static $RandomExtrusionPathAlongZForTest() {
         const randomPoints = [];
 
         for (let i = 0; i < 10; i++) {
@@ -359,7 +363,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static $getRandomExtrudedGeometryAlongZForTest(
+    protected static $GetRandomExtrudedGeometryAlongZForTest(
         ashape: THREE.Shape,
         apath: THREE.CatmullRomCurve3
     ) {
@@ -382,7 +386,7 @@ export class BrdGlb_BaseExporterService {
     // #region Export
 
 
-    protected static $BuildStl(ascene: THREE.Scene) {
+    protected static $ExportToStl(ascene: THREE.Scene) {
 
         const exporter = new THREE_STLExporter();
         const options = {
@@ -402,7 +406,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static async $BuildGltf(ascene: THREE.Scene) {
+    protected static async $ExportToGltf(ascene: THREE.Scene) {
 
         const exporter = new THREE_GLTFExporter();
         const options = {
@@ -422,7 +426,7 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static async $BuildGlb(ascene: THREE.Scene) {
+    protected static async $ExportToGlb(ascene: THREE.Scene) {
 
         const exporter = new THREE_GLTFExporter();
         const options = {
@@ -442,24 +446,26 @@ export class BrdGlb_BaseExporterService {
 
 
 
-    protected static async $Export(
+    static async Export(
+        alogger: Uts.BrdUts_Logger,
         aId: string,
         ascene: THREE.Scene,
         adoBinary = true
     ) {
 
+        alogger.begin(MODULE_NAME, this.Export.name)
         let r: string | Uint8Array;
 
         const file = './srv/test/output/' + ascene.name + '_' + aId;
 
         if (!this.IS_DEPLOY) {
-            const stl = this.$BuildStl(ascene);
+            const stl = this.$ExportToStl(ascene);
             Deno.writeTextFileSync(file + '.stl', stl);
         }
 
         if (adoBinary) {
 
-            const arrBuff = await this.$BuildGlb(ascene);
+            const arrBuff = await this.$ExportToGlb(ascene);
             const uint8Arr = new Uint8Array(arrBuff);
 
             if (!this.IS_DEPLOY) {
@@ -470,7 +476,7 @@ export class BrdGlb_BaseExporterService {
         }
         else {
 
-            const gltf = await this.$BuildGltf(ascene);
+            const gltf = await this.$ExportToGltf(ascene);
 
             if (!this.IS_DEPLOY) {
                 Deno.writeTextFileSync(file + '.gltf', gltf);
@@ -479,11 +485,27 @@ export class BrdGlb_BaseExporterService {
             r = gltf;
         }
 
+        alogger.end('Export of scene is completed');
+
         return r;
     }
 
     // #endregion
     //--------------------------------------------------------------------------
+
+
+    /**
+     * Metodo virtuale per la creazione di una scena esportabile creata dinamicamente
+     * server side.
+     * @param _alogger Registratore di eventi
+     * @param _aparams Parametri di costruzione della scena
+     */
+    static BuildScene(
+        _alogger: Uts.BrdUts_Logger,
+        _aparams: any
+    ) {
+        throw new Error('Override virtual abstract method Build')
+    }
 
 }
 
