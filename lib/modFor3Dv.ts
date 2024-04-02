@@ -8,10 +8,11 @@
 
 export * from "./enums/BrdGlb_eLayer.ts";
 
+export * from "./interfaces/BrdGlb_IBaseModel.ts";
 export * from "./interfaces/BrdGlb_IDynamicModel.ts";
+export * from "./interfaces/BrdGlb_IDynamicModel_PostPayload.ts";
 export * from "./interfaces/BrdGlb_IStaticModel.ts";
 export * from "./interfaces/BrdGlb_IUserData.ts";
-export * from "./interfaces/BrdGlb_IBaseModel.ts";
 
 export * from "./interfaces/BrdGlb_IPoint3D.ts";
 

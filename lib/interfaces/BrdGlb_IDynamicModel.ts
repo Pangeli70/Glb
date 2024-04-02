@@ -19,6 +19,10 @@ import {
 } from "./BrdGlb_IPoint3D.ts";
 
 
+
+/**
+ * Firma del record per la verifica dei dati ricevuti dal server
+ */
 export const BrdGlb_IDynamicModel_Signature = "BrdGlb_IDynamicModel_Signature_V1";
 
 
