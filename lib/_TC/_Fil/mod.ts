@@ -1,11 +1,12 @@
 /** ---------------------------------------------------------------------------
- * @module [BrdBlm_SeD_V_ST]
+ * @module [BrdGlb_TC_Fil]
  * @author [APG] Angeli Paolo Giusto 
  * ----------------------------------------------------------------------------
  * @description 
- * Creazione dei modelli dinamici per le guide di scorrimento dei portoni sezionali
- * a scorrimento verticale.
+ * Creazione dei modelli dinamici per i tamponamenti (fillings) da utilizzare 
+ * per sezioni vetrate, e inserti (oblò e griglie) delle chiusure tecniche.
  * ----------------------------------------------------------------------------
  */
 
-export * from "./services/BrdGlb_TC_SeD_V_ST_Service.ts"
+
+export * from "./services/BrdGlb_TC_Ctx_Service.ts"

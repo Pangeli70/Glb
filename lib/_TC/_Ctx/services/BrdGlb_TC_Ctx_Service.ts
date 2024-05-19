@@ -80,6 +80,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_ROOF]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_LEFT_LAMP]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_RIGHT_LAMP]: null,
+            [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.EXTERN_FRONT_SIDEWALK]: null,
 
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_FACADE]: null,
             [Blm.TC.Ctx.BrdBlm_TC_Ctx_ePartName.INTERN_RIGHT_WALL]: null,

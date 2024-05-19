@@ -60,7 +60,8 @@ export interface BrdGlb_IMaterialDef {
   vDisplacement?: number;
 
   /**
-   * Materiale da usare per le mesh
+   * Materiale da usare per le mesh che viene generato in seguito a partire da 
+   * questa definizione 
    */
   material?: THREE.MeshStandardMaterial
 

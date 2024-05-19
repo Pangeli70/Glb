@@ -1,5 +1,6 @@
 /** ----------------------------------------------------------------------------
- * @module [BrdGlb_TC] Scene 3D server side per le chiusure tecniche Breda
+ * @module [BrdGlb_TC]
+ * @decrioption Creazione delle Scene 3D server side per le chiusure tecniche Breda
  * @author [APG] Angeli Paolo Giusto 
  * -----------------------------------------------------------------------------
  */
