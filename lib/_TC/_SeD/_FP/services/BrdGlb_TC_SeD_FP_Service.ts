@@ -140,7 +140,7 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
         r.add(panel.int);
         r.add(panel.ext);
 
-        alogger.end('Building of sliding tracks for vertical sectional door is completed');
+        alogger.end('Building of foamed panel for vertical sectional door is completed');
 
         return r;
     }

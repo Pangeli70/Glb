@@ -63,13 +63,11 @@ export class BrdGlb_TC_SeD_V_Co_Service {
     ) {
         const start = performance.now();
 
-        const r: THREE.Mesh[] = [];
+        const r: THREE.Scene[] = [];
 
         const sections = this.#buildSections(adoor);
-        for (const section of sections) {
-            r.push(section.ext);
-            r.push(section.int);
-        }
+
+        r.push(...sections);
 
         // const gasketsBuilder = new Brd3Dv_SeDGasketsBuilder(this.logger);
         // const gaskets = gasketsBuilder.SeD_build(adoor);
@@ -92,12 +90,15 @@ export class BrdGlb_TC_SeD_V_Co_Service {
         adoor: Blm.TC.SeD.V.BrdBlm_TC_SeD_V_IDoorParams
     ) {
 
-        const r: BrdGlb_IIntExtMeshes[] = [];
+        const r: THREE.Scene[] = [];
 
         for (const section of adoor.sections) {
 
             if (section.family == Blm.TC.SeD.BrdBlm_TC_SeD_eSectionFamily.FOAMED) {
-                const panelMeshes = BrdGlb_TC_SeD_FP_Service.Build(section);
+                const panelMeshes = BrdGlb_TC_SeD_FP_Service.BuildScene(
+                    this._logger,
+                    section
+                );
                 r.push(panelMeshes)
             }
             else {

@@ -31,6 +31,7 @@ import {
 import {
     BrdGlb_IMaterialDef
 } from "../../../../interfaces/BrdGlb_IMaterialDef.ts";
+import { BrdGlb_TC_Ctx_Service } from "../../../_Ctx/mod.ts";
 import {
     BrdGlb_TC_SeD_FP_FinishVariant_Recordset
 } from "../../_FP/recordsets/BrdGlb_TC_SeD_FP_FinishVariant_Recordset.ts";
@@ -40,6 +41,7 @@ import {
 import {
     BrdGlb_TC_SeD_V_Co_Service
 } from "../_Co/services/BrdGlb_TC_SeD_V_Co_Service.ts";
+
 
 
 // #endregion
@@ -92,11 +94,14 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
     #getContextParams(aconfiguration: Blm.TC.SeD.V.BrdBlm_TC_SeD_V_IDoorConfig) {
 
         const r: Blm.TC.Ctx.BrdBlm_TC_Ctx_IParams = {
+            signature: Blm.TC.Ctx.BrdBlm_TC_Ctx_IParams_Signature,
+            name: "Contesto 2345",
+            description: "DEscrizione del contesto 2345",
             holeWidth: aconfiguration.W,
             holeHeight: aconfiguration.H,
-            holeLintel: aconfiguration.h,
-            holeLintelAdditionalHeight: 0,
-            holeLintelAdditionalDepth: 0,
+            lintel: aconfiguration.h,
+            lintelAdditionalHeight: 0,
+            lintelAdditionalDepth: 0,
             embrasureLeft: 350,
             embrasureRight: 350,
             wallRightOutline: [],
@@ -107,7 +112,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             ceilingThickness: 250,
             ceilingOutline: [],
             columns: [],
-            trasversalBeams:[]
+            trasversalBeams: []
         };
         return r;
     }
@@ -184,6 +189,10 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
 
             const type = this.#getSectionType(aconfig, i, lastIndex);
 
+            const extFinish = Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C81;
+
+            const variant = Blm.TC.SeD.BrdBlm_TC_SeD_eFinishVariant.SMOOTH;
+
             const materials = this.#getMaterialsForFoamedPanels(aconfig);
 
             const topCut = (i != (lastIndex - 1)) ?
@@ -191,12 +200,16 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
                 aconfig.H - yDisplacement - 10; // TODO magic Number -- APG 20231121
 
             const sectionParams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams = {
+                signature: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams_Signature,
+                name: "Sezione " + (i + 1),
+                extFinish,
+                variant,
                 sequence: i,
                 family,
                 type,
                 length: aconfig.W + 20, // TODO MAGIC Number -- APG 20231120
                 height: configSection.h,
-                displacement,
+                displacement: yDisplacement,
                 topCut,
                 bottomCut: 0,
             }
@@ -957,25 +970,24 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
 
         const start = performance.now();
 
-        const contextBuilder = new Blm.TC.Ctx.BrdGlb_TC_Ctx_Service(
+        const contextMeshes = BrdGlb_TC_Ctx_Service.BuildScene(
             this.logger,
-            this.maxAnisotropy
+            this.contextParams
         );
-        const contextMeshes = contextBuilder.build(this.contextParams);
-        this.#addMeshesProgressively(ascene, contextMeshes);
+        this.#addObjectsProgressively(ascene, [contextMeshes]);
 
         const coatBuilder = new BrdGlb_TC_SeD_V_Co_Service(this.logger);
         const coatMeshes = coatBuilder.build(this.doorParams);
-        this.#addMeshesProgressively(ascene, coatMeshes);
+        this.#addObjectsProgressively(ascene, coatMeshes);
 
 
         this.logger.log(MODULE_NAME + ":" + this.build.name);
     }
 
 
-    #addMeshesProgressively(
+    #addObjectsProgressively(
         ascene: THREE.Scene,
-        ameshes: THREE.Mesh[],
+        ameshes: THREE.Object3D[],
         amillisecondsDelay = 0
     ) {
 

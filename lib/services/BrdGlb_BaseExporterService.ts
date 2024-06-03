@@ -456,7 +456,7 @@ export class BrdGlb_BaseExporterService {
         alogger.begin(MODULE_NAME, this.Export.name)
         let r: string | Uint8Array;
 
-        const file = './srv/test/output/' + ascene.name + '_' + aId;
+        const file = './Glb/test/output/' + ascene.name + '_' + aId;
 
         if (!this.IS_DEPLOY) {
             const stl = this.$ExportToStl(ascene);

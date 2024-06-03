@@ -7,6 +7,11 @@
  * ----------------------------------------------------------------------------
  */
 
+import {
+  THREE
+} from "../deps.ts";
+
+
 /**
  * Geometrie estruse accoppiate interno/esterno.
  * Usate ad esempio per i pannelli schiumati del portone sezionale.

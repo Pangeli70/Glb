@@ -1,3 +1,4 @@
 /.env
 /deno.lock
 /docs/*
+/test/output/*
