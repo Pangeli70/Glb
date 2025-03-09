@@ -7,23 +7,13 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-    Blm,
+import { Blm,
     THREE,
-    Uts
-} from "../../../../../deps.ts";
-import {
-    BrdGlb_eLayer
-} from "../../../../../enums/BrdGlb_eLayer.ts";
-import {
-    BrdGlb_ShapeService
-} from "../../../../../services/BrdGlb_ShapeService.ts";
-import {
-    BrdGlb_TC_SeD_ICoatGasketsMaterials
-} from "../../../interfaces/BrdGlb_TC_SeD_ICoatGasketsMaterials.ts";
-import {
-    BrdGlb_TC_SeD_V_Co_GasketsShapes
-} from "../BrdGlb_TC_SeD_V_Co_GasketsShapes.ts";
+    Uts } from "../../../../../deps.ts";
+import { BrdGlb_eLayer } from "../../../../../enums/BrdGlb_eLayer.ts";
+import { BrdGlb_ShapeService } from "../../../../../services/BrdGlb_ShapeService.ts";
+import { BrdGlb_TC_SeD_ICoatGasketsMaterials } from "../../../interfaces/BrdGlb_TC_SeD_ICoatGasketsMaterials.ts";
+import { BrdGlb_TC_SeD_V_Co_GasketsShapes } from "../BrdGlb_TC_SeD_V_Co_GasketsShapes.ts";
 
 export const MODULE_NAME = "BrdGlb_TC_SeD_V_Co_GasketsService";
 

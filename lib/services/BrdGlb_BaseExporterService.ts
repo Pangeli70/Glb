@@ -14,19 +14,13 @@ import {
     THREE_STLExporter,
     Uts
 } from "../deps.ts";
-import {
-    BrdGlb_eLayer
-} from "../enums/BrdGlb_eLayer.ts";
-import {
-    BrdGlb_IMeshCouple
-} from "../interfaces/BrdGlb_IMeshCouple.ts";
+import { BrdGlb_eLayer } from "../enums/BrdGlb_eLayer.ts";
+import { BrdGlb_IMeshCouple } from "../interfaces/BrdGlb_IMeshCouple.ts";
 import {
     BrdGlb_IUserData,
     BrdGlb_IUserData_Signature
 } from "../interfaces/BrdGlb_IUserData.ts";
-import {
-    BrdGlb_UVRemapperService
-} from "./BrdGlb_UVRemapperService.ts";
+import { BrdGlb_UVRemapperService } from "./BrdGlb_UVRemapperService.ts";
 
 
 const MODULE_NAME = "BrdGlb_BaseExporterService";

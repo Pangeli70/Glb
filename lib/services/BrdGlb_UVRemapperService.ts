@@ -7,9 +7,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-    THREE
-} from "../deps.ts";
+import { THREE } from "../deps.ts";
 
 /**
  * Servizio per rimappare le texture sulle geometrie delle mesh

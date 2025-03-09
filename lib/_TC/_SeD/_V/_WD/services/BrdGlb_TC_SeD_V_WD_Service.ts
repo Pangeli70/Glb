@@ -11,12 +11,10 @@
 import {
   THREE,
   Blm,
-  Uts
-} from "../../../../../deps.ts";
+  Uts } from "../../../../../deps.ts";
 
 import { 
-  BrdGlb_ShapeService 
-} from "../../../../../services/BrdGlb_ShapeService.ts";
+  BrdGlb_ShapeService  } from "../../../../../services/BrdGlb_ShapeService.ts";
 
 
 

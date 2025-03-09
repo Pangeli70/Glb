@@ -7,9 +7,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-  THREE
-} from "../deps.ts";
+import {  THREE } from "../deps.ts";
 
 /**
  * Mesh estruse accoppiate interno/esterno.

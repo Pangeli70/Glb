@@ -6,9 +6,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-  THREE
-} from "../deps.ts";
+import {  THREE } from "../deps.ts";
 
 /**
  * Coppia di profilati estrusi destro e sinistro.

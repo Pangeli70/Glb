@@ -16,12 +16,8 @@
  */
 
 
-import {
-    BrdBlm_TC_SeD_V_IDoorParams
-} from "../../../../../../Blm/lib/_TC/_SeD/_V/interfaces/BrdBlm_TC_SeD_V_IDoorParams.ts";
-import {
-    BrdGlb_UVRemapperService
-} from "../../../../services/BrdGlb_UVRemapperService.ts";
+import { BrdBlm_TC_SeD_V_IDoorParams } from "../../../../../../Blm/lib/_TC/_SeD/_V/interfaces/BrdBlm_TC_SeD_V_IDoorParams.ts";
+import { BrdGlb_UVRemapperService } from "../../../../services/BrdGlb_UVRemapperService.ts";
 
 
 export const MODULE_NAME = "Brd3DvSeDAccessoriesBuilder";

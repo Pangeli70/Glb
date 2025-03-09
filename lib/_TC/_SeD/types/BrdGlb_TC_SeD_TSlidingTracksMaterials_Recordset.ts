@@ -1,7 +1,6 @@
 import {
   Blm,
-  THREE
-} from "../../../deps.ts";
+  THREE } from "../../../deps.ts";
 
 
 export type BrdGlb_TC_SeD_TSlidingTracksMaterials_Recordset = Record<

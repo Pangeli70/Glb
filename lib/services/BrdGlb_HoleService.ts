@@ -12,8 +12,7 @@ import {
   THREE_CSG
 } from "../deps.ts";
 import {
-  BrdGlb_IIntExtGeometries
-} from "../interfaces/BrdGlb_IIntExtGeometries.ts";
+  BrdGlb_IIntExtGeometries } from "../interfaces/BrdGlb_IIntExtGeometries.ts";
 
 
 /**

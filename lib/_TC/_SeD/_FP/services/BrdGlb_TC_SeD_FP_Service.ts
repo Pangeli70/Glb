@@ -10,48 +10,22 @@
 //-----------------------------------------------------------------------------
 // #region Imports
 
-import {
-    Blm,
+import { Blm,
     THREE,
-    Uts
-} from "../../../../deps.ts";
-import {
-    BrdGlb_eLayer
-} from "../../../../enums/BrdGlb_eLayer.ts";
-import {
-    BrdGlb_IIntExtGeometries
-} from "../../../../interfaces/BrdGlb_IIntExtGeometries.ts";
-import {
-    BrdGlb_IIntExtMaterialDef
-} from "../../../../interfaces/BrdGlb_IIntExtMaterialDef.ts";
-import {
-    BrdGlb_IIntExtMeshes
-} from "../../../../interfaces/BrdGlb_IIntExtMeshes.ts";
-import {
-    BrdGlb_IIntExtShapes
-} from "../../../../interfaces/BrdGlb_IIntExtShapes.ts";
-import {
-    BrdGlb_IUserData,
-    BrdGlb_IUserData_Signature
-} from "../../../../interfaces/BrdGlb_IUserData.ts";
-import {
-    BrdGlb_BaseExporterService
-} from "../../../../services/BrdGlb_BaseExporterService.ts";
-import {
-    BrdGlb_HoleService
-} from "../../../../services/BrdGlb_HoleService.ts";
-import {
-    BrdGlb_ShapeService
-} from "../../../../services/BrdGlb_ShapeService.ts";
-import {
-    BrdGlb_UVRemapperService
-} from "../../../../services/BrdGlb_UVRemapperService.ts";
-import {
-    BrdGlb_TC_SeD_SectionMaterials_Recordset
-} from "../../recordsets/BrdGlb_TC_SeD_SectionMaterials_Recordset.ts";
-import {
-    BrdGlb_TC_SeD_FP_FinishVariant_Recordset
-} from "../recordsets/BrdGlb_TC_SeD_FP_FinishVariant_Recordset.ts";
+    Uts } from "../../../../deps.ts";
+import { BrdGlb_eLayer } from "../../../../enums/BrdGlb_eLayer.ts";
+import { BrdGlb_IIntExtGeometries } from "../../../../interfaces/BrdGlb_IIntExtGeometries.ts";
+import { BrdGlb_IIntExtMaterialDef } from "../../../../interfaces/BrdGlb_IIntExtMaterialDef.ts";
+import { BrdGlb_IIntExtMeshes } from "../../../../interfaces/BrdGlb_IIntExtMeshes.ts";
+import { BrdGlb_IIntExtShapes } from "../../../../interfaces/BrdGlb_IIntExtShapes.ts";
+import { BrdGlb_IUserData,
+    BrdGlb_IUserData_Signature } from "../../../../interfaces/BrdGlb_IUserData.ts";
+import { BrdGlb_BaseExporterService } from "../../../../services/BrdGlb_BaseExporterService.ts";
+import { BrdGlb_HoleService } from "../../../../services/BrdGlb_HoleService.ts";
+import { BrdGlb_ShapeService } from "../../../../services/BrdGlb_ShapeService.ts";
+import { BrdGlb_UVRemapperService } from "../../../../services/BrdGlb_UVRemapperService.ts";
+import { BrdGlb_TC_SeD_SectionMaterials_Recordset } from "../../recordsets/BrdGlb_TC_SeD_SectionMaterials_Recordset.ts";
+import { BrdGlb_TC_SeD_FP_FinishVariant_Recordset } from "../recordsets/BrdGlb_TC_SeD_FP_FinishVariant_Recordset.ts";
 
 // #endregion
 //-----------------------------------------------------------------------------

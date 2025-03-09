@@ -7,9 +7,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-  THREE
-} from "../deps.ts";
+import {  THREE } from "../deps.ts";
 
 /**
  * Forme di estrusione per geometrie accoppiate interno/esterno.

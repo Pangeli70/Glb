@@ -5,15 +5,9 @@
  * @version 0.1 APG 20240222 Rotazione
  * ----------------------------------------------------------------------------
  */
-import {
-    THREE
-} from "../deps.ts";
-import {
-    BrdGlb_eLayer
-} from "../enums/BrdGlb_eLayer.ts";
-import {
-    BrdGlb_IPoint3D
-} from "./BrdGlb_IPoint3D.ts";
+import { THREE } from "../deps.ts";
+import { BrdGlb_eLayer } from "../enums/BrdGlb_eLayer.ts";
+import { BrdGlb_IPoint3D } from "./BrdGlb_IPoint3D.ts";
 
 
 

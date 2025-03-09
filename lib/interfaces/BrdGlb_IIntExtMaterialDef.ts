@@ -7,9 +7,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-  BrdGlb_IMaterialDef
-} from "./BrdGlb_IMaterialDef.ts";
+import {  BrdGlb_IMaterialDef } from "./BrdGlb_IMaterialDef.ts";
 
 /**
  * Definizioni dei Materiali per le mesh estruse accoppiate interno/esterno

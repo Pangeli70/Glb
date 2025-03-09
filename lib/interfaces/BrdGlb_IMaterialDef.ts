@@ -7,16 +7,9 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-  Blm,
-  THREE
-} from "../deps.ts";
-import {
-  BrdGlb_ITextureDef
-} from "./BrdGlb_ITextureDef.ts";
-import {
-  BrdGlb_IBumpMapDef
-} from "./BrdGlb_IBumpMapDef.ts";
+import {  Blm,  THREE } from "../deps.ts";
+import {  BrdGlb_ITextureDef } from "./BrdGlb_ITextureDef.ts";
+import {  BrdGlb_IBumpMapDef } from "./BrdGlb_IBumpMapDef.ts";
 
 
 /**

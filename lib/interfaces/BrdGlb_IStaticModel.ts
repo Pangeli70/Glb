@@ -6,18 +6,10 @@
  * ----------------------------------------------------------------------------
  */
 
-import {
-    THREE
-} from "../deps.ts";
-import {
-    BrdGlb_eLayer
-} from "../enums/BrdGlb_eLayer.ts";
-import {
-    BrdGlb_IBaseModel
-} from "./BrdGlb_IBaseModel.ts";
-import {
-    BrdGlb_IPoint3D
-} from "./BrdGlb_IPoint3D.ts";
+import { THREE } from "../deps.ts";
+import { BrdGlb_eLayer } from "../enums/BrdGlb_eLayer.ts";
+import { BrdGlb_IBaseModel } from "./BrdGlb_IBaseModel.ts";
+import { BrdGlb_IPoint3D } from "./BrdGlb_IPoint3D.ts";
 
 
 export const BrdGlb_IStaticModel_Signature = "BrdGlb_IStaticModel_Signature_V2";
