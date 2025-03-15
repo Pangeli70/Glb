@@ -19,9 +19,6 @@ export { CSG as THREE_CSG } from "https://esm.sh/three-csg-ts@3.1.14";
 export const Brd3Dv_AssetsServer = "";
 
 
-// Local repo
-export * from "../../Blm/mod.ts";
-export * from "../../Uts/mod.ts";
+/** Internal dependencies */
 
-// Github repo
-// export * from "../../Blm/mod.ts";
+export * from "./monorepo.ts";
