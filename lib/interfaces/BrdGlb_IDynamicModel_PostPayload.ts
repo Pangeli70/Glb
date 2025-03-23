@@ -18,7 +18,7 @@ export const BrdGlb_IDynamicModel_PostPayload_Signature = "BrdGlb_IDynamicModel_
  * Payload restituito della chiamata in post verso i microservizi
  * che generano modelli dinamici lato server
  */
-export interface BrdGlb_IDynamicModel_PostPayload extends Uts.BrdUts_IRestPayload {
+export interface BrdGlb_IDynamicModel_PostPayload extends Uts.ApgUts_IRestPayload {
 
     /**
     * Firma del record

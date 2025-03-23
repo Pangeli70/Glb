@@ -7,6 +7,7 @@
  */
 
 import {
+  A3D,
   Blm,
   THREE,
   THREE_CSG
@@ -28,11 +29,11 @@ export class BrdGlb_HoleService {
    */
   static #getHoleGeometry(
     acode: string,
-    aposition: Blm.BrdBlm_IPoint2D
+    aposition: A3D.ApgA3D_IPoint2D
   ) {
 
     const nr = Blm.TC.SeD.BrdBlm_TC_SeD_HolesOutlinesService.getOutlineByInsertCode(acode, aposition);
-    const holeOutline = nr.payload as Blm.BrdBlm_IPoint2D[];
+    const holeOutline = nr.payload as A3D.ApgA3D_IPoint2D[];
 
 
     const holePoints: THREE.Vector2[] = [];

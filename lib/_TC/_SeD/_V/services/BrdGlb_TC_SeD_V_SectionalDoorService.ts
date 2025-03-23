@@ -15,9 +15,12 @@
 
 
 import { BrdGlb_AssetsServer } from "../../../../consts/BrdGlb_AssetsServer.ts";
-import { Blm,
+import {
+    A3D,
+    Blm,
     THREE,
-    Uts } from "../../../../deps.ts";
+    Uts
+} from "../../../../deps.ts";
 import { BrdGlb_IBumpMapDef } from "../../../../interfaces/BrdGlb_IBumpMapDef.ts";
 import { BrdGlb_IIntExtMaterialDef } from "../../../../interfaces/BrdGlb_IIntExtMaterialDef.ts";
 import { BrdGlb_IMaterialDef } from "../../../../interfaces/BrdGlb_IMaterialDef.ts";
@@ -43,7 +46,7 @@ const MODULE_NAME = "Brd3Dv_SeDSceneBuilder";
  */
 export class BrdGlb_TC_SeD_V_SectionalDoorService {
 
-    logger: Uts.BrdUts_Logger;
+    logger: Uts.ApgUts_Logger_Deprecated;
 
     configuration: Blm.TC.SeD.V.BrdBlm_TC_SeD_V_IDoorConfig;
 
@@ -53,7 +56,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
 
 
     constructor(
-        alogger: Uts.BrdUts_Logger,
+        alogger: Uts.ApgUts_Logger_Deprecated,
         aconfiguration: Blm.TC.SeD.V.BrdBlm_TC_SeD_V_IDoorConfig,
         amaxAnisotropy: number
     ) {
@@ -240,8 +243,8 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
         }
         else {
 
-            Uts.BrdUts.Assert(
-                false,
+            Uts.ApgUts.PanicIf(
+                true,
                 `$$225: La famiglia ${family} non è gestita!`
             );
         }
@@ -421,10 +424,10 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
         if (acolor) {
 
             if (acolor.startsWith("RAL")) {
-                const ralColor = Blm.BrdBlm_RalColorsService.getColor(acolor)
+                const ralColor = A3D.ApgA3D_RalColors_Service.getColor(acolor)
                 if (ralColor == undefined) {
-                    Uts.BrdUts.Assert(
-                        false,
+                    Uts.ApgUts.PanicIf(
+                        true,
                         `$$471 Colore RAL ${acolor} non riconosciuto`
                     )
                 }
@@ -436,8 +439,8 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
                 material.color = new THREE.Color(acolor);
             }
             else {
-                Uts.BrdUts.Assert(
-                    false,
+                Uts.ApgUts.PanicIf(
+                    true,
                     `$$484 Colore fuori standard ${acolor} non gestito`
                 )
             }
@@ -589,14 +592,14 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
                     );
                     break;
                 }
-                const ral = Blm.BrdBlm_RalColorsService.getColor(acolor);
+                const ral = A3D.ApgA3D_RalColors_Service.getColor(acolor);
                 if (ral != undefined) {
                     r = ral.color;
                 }
                 break;
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C21: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 9002");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 9002");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -604,7 +607,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C81:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C81_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 9001");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 9001");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -612,7 +615,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C17:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_C17_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 8019");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 8019");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -620,7 +623,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_9016_SATIN_FS:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_9016_SATIN: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 9016");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 9016");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -630,7 +633,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_7016_FS:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_7016_SATIN:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_7016_SATIN_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 7016");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 7016");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -638,7 +641,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_6005:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_6005_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 6005");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 6005");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -646,7 +649,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_3000:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_3000_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 3000");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 3000");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -654,7 +657,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             }
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_5010:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_5010_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 5010");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 5010");
                 if (ral != undefined) {
                     r = ral.color;
                 }
@@ -664,7 +667,7 @@ export class BrdGlb_TC_SeD_V_SectionalDoorService {
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_9006_FS:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_9006_SATIN:
             case Blm.TC.SeD.BrdBlm_TC_SeD_eFinish.PRE_LAQ_RAL_9006_SATIN_FS: {
-                const ral = Blm.BrdBlm_RalColorsService.getColor("RAL 9006");
+                const ral = A3D.ApgA3D_RalColors_Service.getColor("RAL 9006");
                 if (ral != undefined) {
                     r = ral.color;
                 }

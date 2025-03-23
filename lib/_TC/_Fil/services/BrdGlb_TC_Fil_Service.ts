@@ -21,6 +21,9 @@ import { BrdGlb_IUserData,
 import { BrdGlb_BaseExporterService } from "../../../services/BrdGlb_BaseExporterService.ts";
 import { BrdGlb_ShapeService } from "../../../services/BrdGlb_ShapeService.ts";
 import { BrdGlb_UVRemapperService } from "../../../services/BrdGlb_UVRemapperService.ts";
+import { BrdGlb_TC_SeD_FP_FinishVariant_Recordset } from "../../_SeD/_FP/recordsets/BrdGlb_TC_SeD_FP_FinishVariant_Recordset.ts";
+import { BrdGlb_TC_SeD_FP_Service } from "../../_SeD/_FP/services/BrdGlb_TC_SeD_FP_Service.ts";
+import { BrdGlb_TC_SeD_SectionMaterials_Recordset } from "../../_SeD/recordsets/BrdGlb_TC_SeD_SectionMaterials_Recordset.ts";
 import { BrdGlb_TC_AluFinishVariant_Recordset } from "../../recordsets/BrdGlb_TC_AluFinishVariant_Recordset.ts";
 
 
@@ -38,7 +41,7 @@ export const MODULE_NAME = "BrdGlb_TC_Fil_Service";
 export class BrdGlb_TC_Fil_Service extends BrdGlb_BaseExporterService {
 
     static #getMaterials(
-        aparams: Blm.TC.SeD.BrdBlm_TC_IFillingParams
+        aparams: Blm.TC.BrdBlm_TC_IFillingParams
     ) {
 
         const intFinish = (aparams.intFinish) ?
@@ -88,8 +91,8 @@ export class BrdGlb_TC_Fil_Service extends BrdGlb_BaseExporterService {
     /**
      * Costruisce e posiziona il pannello coibentato del manto del portone sezionale
      */
-    static BuildScene(
-        alogger: Uts.BrdUts_Logger,
+    static override BuildScene(
+        alogger: Uts.ApgUts_Logger_Deprecated,
         aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams,
     ) {
 

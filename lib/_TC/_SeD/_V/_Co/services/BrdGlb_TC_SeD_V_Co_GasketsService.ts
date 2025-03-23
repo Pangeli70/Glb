@@ -7,9 +7,12 @@
  * ----------------------------------------------------------------------------
  */
 
-import { Blm,
+import {
+    A3D,
+    Blm,
     THREE,
-    Uts } from "../../../../../deps.ts";
+    Uts
+} from "../../../../../deps.ts";
 import { BrdGlb_eLayer } from "../../../../../enums/BrdGlb_eLayer.ts";
 import { BrdGlb_ShapeService } from "../../../../../services/BrdGlb_ShapeService.ts";
 import { BrdGlb_TC_SeD_ICoatGasketsMaterials } from "../../../interfaces/BrdGlb_TC_SeD_ICoatGasketsMaterials.ts";
@@ -21,10 +24,10 @@ export const MODULE_NAME = "BrdGlb_TC_SeD_V_Co_GasketsService";
 
 export class BrdGlb_TC_SeD_V_Co_GasketsService {
 
-    logger: Uts.BrdUts_Logger;
+    logger: Uts.ApgUts_Logger_Deprecated;
 
 
-    constructor(alogger: Uts.BrdUts_Logger) {
+    constructor(alogger: Uts.ApgUts_Logger_Deprecated) {
         this.logger = alogger;
     }
 
@@ -32,7 +35,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
 
     #makeGasketsShapes() {
 
-        const aluGasketProfile: Blm.BrdBlm_IPoint2D[] = [
+        const aluGasketProfile: A3D.ApgA3D_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: 42, y: 0 },
             { x: 42, y: 40 },
@@ -45,7 +48,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const topBottomAluProfile = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(aluGasketProfile);
 
 
-        const bottomGasketProfile: Blm.BrdBlm_IPoint2D[] = [
+        const bottomGasketProfile: A3D.ApgA3D_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: 42, y: 0 },
             { x: 32, y: -20 },
@@ -62,7 +65,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const bottomGasket = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(bottomGasketProfile);
 
 
-        const topGasketProfile: Blm.BrdBlm_IPoint2D[] = [
+        const topGasketProfile: A3D.ApgA3D_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: 3, y: 3 },
             { x: -20, y: 23 },
@@ -72,7 +75,7 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const topGasket = BrdGlb_ShapeService.GetShapeFromArrayOfPoints(topGasketProfile);
 
 
-        const lateralGasketProfile: Blm.BrdBlm_IPoint2D[] = [
+        const lateralGasketProfile: A3D.ApgA3D_IPoint2D[] = [
             { x: 0, y: 0 },
             { x: -20, y: 0 },
             { x: -20, y: 2 },
@@ -103,12 +106,12 @@ export class BrdGlb_TC_SeD_V_Co_GasketsService {
         const rubber = new THREE.MeshPhongMaterial({
             color: 0x202020,
         });
-        
+
         const scotchBriteBlack = new THREE.MeshPhongMaterial({
             color: 0x404040,
             // TODO Add a bit of reflectivity to alu material -- APG 20231109
         });
-        
+
         const r: BrdGlb_TC_SeD_ICoatGasketsMaterials = {
             rubber,
             scotchBriteBlack

@@ -9,12 +9,17 @@
  */
 
 
-import { Uts,
+import {
+    A3D,
     Blm,
-    THREE } from "../../../deps.ts";
+    THREE,
+    Uts
+} from "../../../deps.ts";
 import { BrdGlb_eLayer } from "../../../enums/BrdGlb_eLayer.ts";
-import { BrdGlb_IUserData,
-    BrdGlb_IUserData_Signature } from "../../../interfaces/BrdGlb_IUserData.ts";
+import {
+    BrdGlb_IUserData,
+    BrdGlb_IUserData_Signature
+} from "../../../interfaces/BrdGlb_IUserData.ts";
 import { BrdGlb_BaseExporterService } from "../../../services/BrdGlb_BaseExporterService.ts";
 import { BrdGlb_ShapeService } from "../../../services/BrdGlb_ShapeService.ts";
 
@@ -38,7 +43,7 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
 
     static #getMaterialFromDef(
-        adef: Blm.BrdBlm_IMaterialDef,
+        adef: A3D.ApgA3D_IMaterialDef,
     ) {
 
         const r = new THREE.MeshStandardMaterial({
@@ -215,8 +220,8 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
     //--------------------------------------------------------------------------
     // #region Scene
 
-    static BuildScene(
-        alogger: Uts.BrdUts_Logger,
+    static override BuildScene(
+        alogger: Uts.ApgUts_Logger_Deprecated,
         aparams: Blm.TC.Ctx.BrdBlm_TC_Ctx_IParams,
     ) {
 
@@ -226,9 +231,9 @@ export class BrdGlb_TC_Ctx_Service extends BrdGlb_BaseExporterService {
 
         // NOTE Il visualizzatore utilizza come unità di misura i metri mentre
         // la business logic utilizza i millimetri --APG 20240303
-        r.scale.x = 0.001;
-        r.scale.y = 0.001;
-        r.scale.z = 0.001;
+        r.scale.x = 0.00001;
+        r.scale.y = 0.00001;
+        r.scale.z = 0.00001;
 
         r.name = aparams.name;
 

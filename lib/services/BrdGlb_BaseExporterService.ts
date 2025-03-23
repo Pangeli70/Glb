@@ -8,7 +8,7 @@
 
 
 import {
-    Blm,
+    A3D,
     THREE,
     THREE_GLTFExporter,
     THREE_STLExporter,
@@ -56,6 +56,9 @@ export class BrdGlb_BaseExporterService {
      */
     protected static readonly LINEAR_EXTRUSION_STEP = 1000;
 
+
+    readonly static GLB_OUTPUT_FOLDER = "/srv/data/output/glb/";
+
     /**
      * Flag che indica se siamo nell'edge di Deno Deploy
      */
@@ -71,10 +74,10 @@ export class BrdGlb_BaseExporterService {
     // #region Utilities
 
     protected static $MirrorPointsAgainstYAxis(
-        aprofile: Blm.BrdBlm_IPoint2D[]
+        aprofile: A3D.ApgA3D_IPoint2D[]
     ) {
 
-        const r: Blm.BrdBlm_IPoint2D[] = [];
+        const r: A3D.ApgA3D_IPoint2D[] = [];
 
         r.push({ ...aprofile[0] });
 
@@ -108,7 +111,7 @@ export class BrdGlb_BaseExporterService {
      */
     protected static $PlaceMeshWithOperations(
         amesh: THREE.Mesh,
-        aplacementOp: Blm.BrdBlm_IPlacementOperation[],
+        aplacementOp: A3D.ApgA3D_IPlacementOperation[],
         adoFlip: boolean
     ) {
 
@@ -126,27 +129,27 @@ export class BrdGlb_BaseExporterService {
                 value *= -1;
             }
             switch (op.operation) {
-                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_X_IN_MM: {
+                case A3D.ApgA3D_ePlacementOperation.TRANSLATE_X_IN_MM: {
                     r1.translateX(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_Y_IN_MM: {
+                case A3D.ApgA3D_ePlacementOperation.TRANSLATE_Y_IN_MM: {
                     r1.translateY(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.TRANSLATE_Z_IN_MM: {
+                case A3D.ApgA3D_ePlacementOperation.TRANSLATE_Z_IN_MM: {
                     r1.translateZ(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.ROTATE_X_IN_RAD: {
+                case A3D.ApgA3D_ePlacementOperation.ROTATE_X_IN_RAD: {
                     r1.rotateX(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.ROTATE_Y_IN_RAD: {
+                case A3D.ApgA3D_ePlacementOperation.ROTATE_Y_IN_RAD: {
                     r1.rotateY(value);
                     break;
                 }
-                case Blm.BrdBlm_ePlacementOperation.ROTATE_Z_IN_RAD: {
+                case A3D.ApgA3D_ePlacementOperation.ROTATE_Z_IN_RAD: {
                     r1.rotateZ(value);
                     break;
                 }
@@ -163,7 +166,7 @@ export class BrdGlb_BaseExporterService {
 
     protected static $PlaceCoupleWithOperations(
         acouple: BrdGlb_IMeshCouple,
-        operations: Blm.BrdBlm_IPlacementOperation[]
+        operations: A3D.ApgA3D_IPlacementOperation[]
     ) {
         const r: THREE.Object3D[] = [];
 
@@ -312,7 +315,8 @@ export class BrdGlb_BaseExporterService {
 
             return r;
         }
-        catch (err) {
+        catch (e) {
+            const err = e as Error;
             console.log(err.message);
         }
 
@@ -441,7 +445,7 @@ export class BrdGlb_BaseExporterService {
 
 
     static async Export(
-        alogger: Uts.BrdUts_Logger,
+        alogger: Uts.ApgUts_Logger_Deprecated,
         aId: string,
         ascene: THREE.Scene,
         adoBinary = true
@@ -450,7 +454,7 @@ export class BrdGlb_BaseExporterService {
         alogger.begin(MODULE_NAME, this.Export.name)
         let r: string | Uint8Array;
 
-        const file = './Glb/test/output/' + ascene.name + '_' + aId;
+        const file = Deno.cwd() + this.GLB_OUTPUT_FOLDER + ascene.name + '_' + aId;
 
         if (!this.IS_DEPLOY) {
             const stl = this.$ExportToStl(ascene);
@@ -495,7 +499,7 @@ export class BrdGlb_BaseExporterService {
      * @param _aparams Parametri di costruzione della scena
      */
     static BuildScene(
-        _alogger: Uts.BrdUts_Logger,
+        _alogger: Uts.ApgUts_Logger_Deprecated,
         _aparams: any
     ) {
         throw new Error('Override virtual abstract method Build')

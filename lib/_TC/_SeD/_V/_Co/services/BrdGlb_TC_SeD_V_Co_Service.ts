@@ -38,9 +38,9 @@ export class BrdGlb_TC_SeD_V_Co_Service {
 
 
 
-    private _logger: Uts.BrdUts_Logger;
+    private _logger: Uts.ApgUts_Logger_Deprecated;
 
-    constructor(alogger: Uts.BrdUts_Logger) {
+    constructor(alogger: Uts.ApgUts_Logger_Deprecated) {
 
         this._logger = alogger;
 
@@ -96,8 +96,8 @@ export class BrdGlb_TC_SeD_V_Co_Service {
                 r.push(panelMeshes)
             }
             else {
-                Uts.BrdUts.Assert(
-                    false,
+                Uts.ApgUts.PanicIf(
+                    true,
                     `${MODULE_NAME}:${this.#buildSections.name}: ` +
                     `Le sezioni della famiglia ${section.family} non sono ancora implementate.`
                 )

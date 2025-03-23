@@ -91,8 +91,8 @@ export class BrdGlb_TC_SeD_FP_Service extends BrdGlb_BaseExporterService {
     /**
      * Costruisce e posiziona il pannello coibentato del manto del portone sezionale
      */
-    static BuildScene(
-        alogger: Uts.BrdUts_Logger,
+    static override BuildScene(
+        alogger: Uts.ApgUts_Logger_Deprecated,
         aparams: Blm.TC.SeD.BrdBlm_TC_SeD_ISectionParams,
     ) {
 

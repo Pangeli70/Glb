@@ -6,7 +6,7 @@
  * ----------------------------------------------------------------------------
  */
 
-import { Blm, THREE } from "../deps.ts";
+import { A3D, Blm, THREE } from "../deps.ts";
 
 
 /**
@@ -16,7 +16,7 @@ import { Blm, THREE } from "../deps.ts";
 export class BrdGlb_ShapeService {
 
 
-    static GetShapeFromArrayOfPoints(apoints: Blm.BrdBlm_IPoint2D[]) {
+    static GetShapeFromArrayOfPoints(apoints: A3D.ApgA3D_IPoint2D[]) {
         const vectors: THREE.Vector2[] = [];
         apoints.forEach((point) => {
             vectors.push(new THREE.Vector2(point.x, point.y));

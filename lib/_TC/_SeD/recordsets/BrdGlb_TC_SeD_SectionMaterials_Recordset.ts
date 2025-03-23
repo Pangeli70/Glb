@@ -7,10 +7,8 @@
  * ----------------------------------------------------------------------------
  */
 
-import * as Blm1 from "../../../../../Blm/modForGlb.ts";
-import { Blm } from "../../../deps.ts";
-import {
-  BrdGlb_IMaterialDef } from "../../../interfaces/BrdGlb_IMaterialDef.ts";
+import { Blm, A3D } from "../../../deps.ts";
+import { BrdGlb_IMaterialDef } from "../../../interfaces/BrdGlb_IMaterialDef.ts";
 
 
 /**
@@ -18,12 +16,12 @@ import {
  * dei materiali per le mesh delle sezioni estruse
  */
 export type BrdGlb_TC_SeD_TSectionMaterial_Recordset = Record<
-  Blm1.BrdBlm_TC_SeD_eFinish,
+  Blm.TC.SeD.BrdBlm_TC_SeD_eFinish,
   BrdGlb_IMaterialDef
 >;
 
 
-const finish = Blm1.BrdBlm_TC_SeD_eFinish;
+const finish = Blm.TC.SeD.BrdBlm_TC_SeD_eFinish;
 
 /**
  * Tabella definizione materiali per le sezioni dei portoni sezionali
@@ -39,111 +37,111 @@ export const BrdGlb_TC_SeD_SectionMaterials_Recordset: BrdGlb_TC_SeD_TSectionMat
 
 
   [finish.PRE_LAQ_C21]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9002")!.color,
+    color: A3D.ApgA3D_RalColors_Service.getColor("RAL 9002")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
 
 
 
   [finish.PRE_LAQ_C81]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9010")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9010")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_C81_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
 
 
 
   [finish.PRE_LAQ_C17]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 8019")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 8019")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_C17_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 8019")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 8019")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
 
 
 
   [finish.PRE_LAQ_RAL_7016]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_7016_SATIN]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.PRE_LAQ_SATIN,
   },
   [finish.PRE_LAQ_RAL_7016_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_7016_SATIN_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 7016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.PRE_LAQ_SATIN,
   },
 
 
 
   [finish.PRE_LAQ_RAL_9006]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_9006_SATIN]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.PRE_LAQ_SATIN,
   },
   [finish.PRE_LAQ_RAL_9006_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_9006_SATIN_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9006")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.PRE_LAQ_SATIN,
   },
 
 
 
   [finish.PRE_LAQ_RAL_9016_SATIN]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.PRE_LAQ_SATIN,
   },
   [finish.PRE_LAQ_RAL_9016_SATIN_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 9016")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 9016")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.PRE_LAQ_SATIN,
   },
 
 
 
   [finish.PRE_LAQ_RAL_3000]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 3000")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 3000")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_3000_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 3000")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 3000")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
 
 
 
   [finish.PRE_LAQ_RAL_6005]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 6005")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 6005")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_6005_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 6005")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 6005")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
 
 
 
   [finish.PRE_LAQ_RAL_5010]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 5010")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 5010")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
   [finish.PRE_LAQ_RAL_5010_FS]: {
-    color: Blm.ApgA3D_RalColors_Service.getColor("RAL 5010")!.color,
+    color:  A3D.ApgA3D_RalColors_Service.getColor("RAL 5010")!.color,
     roughness: Blm.BrdBlm_eGlossRoughness.RAL_GLOSS_25_35,
   },
 
